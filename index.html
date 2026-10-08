@@ -1,0 +1,1360 @@
+<title>Protist Field Guide</title>
+<meta name="description" content="Interactive study site for Lecture 9: Protists. Six supergroups, their subgroups, distinguishing traits, memory aids, flashcards and quizzes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a microscope-slide field guide. Light = brightfield glass, dark = darkfield. Sticky tab bar, one column of reading, color-coded by supergroup as in the lecture's tree. */
+:root{
+  --bg:#EEF3F4; --surface:#FFFFFF; --surface-2:#E3EBED; --ink:#13202A; --muted:#566874; --line:#C9D5D9;
+  --accent:#2747A0; --accent-ink:#FFFFFF; --good:#1F7A4A; --bad:#B3362F; --good-bg:#E2F2E8; --bad-bg:#F8E3E1; --mark:#FFF1B8;
+  --exc:#C98410; --chr:#D0612E; --rhi:#C9404E; --arc:#7B58AE; --amo:#4466BE; --opi:#3F8A57; --intro:#4F6672;
+  --f-display:"Young Serif", Georgia, "Times New Roman", serif;
+  --f-body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#081016; --surface:#0F1A22; --surface-2:#16252F; --ink:#E3ECF0; --muted:#93A6B1; --line:#25394A;
+  --accent:#8FB0FF; --accent-ink:#081016; --good:#6FD39B; --bad:#FF8B80; --good-bg:#12301F; --bad-bg:#3A1A18; --mark:#4A4013;
+  --exc:#F0B54A; --chr:#F38A5B; --rhi:#F07583; --arc:#B596E6; --amo:#86A3F2; --opi:#79C58F; --intro:#9DB3BF;
+  color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#081016; --surface:#0F1A22; --surface-2:#16252F; --ink:#E3ECF0; --muted:#93A6B1; --line:#25394A;
+  --accent:#8FB0FF; --accent-ink:#081016; --good:#6FD39B; --bad:#FF8B80; --good-bg:#12301F; --bad-bg:#3A1A18; --mark:#4A4013;
+  --exc:#F0B54A; --chr:#F38A5B; --rhi:#F07583; --arc:#B596E6; --amo:#86A3F2; --opi:#79C58F; --intro:#9DB3BF;
+  color-scheme:dark }
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;margin:0}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;line-height:1.2;text-wrap:balance;margin:0}
+h2{font-size:1.7rem} h3{font-size:1.25rem}
+p{margin:0}
+a{color:var(--accent)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.mono{font-family:var(--f-mono);font-size:.82em}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:16px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.muted{color:var(--muted)}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* header */
+header.top{padding-block:28px 18px}
+header.top .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between}
+header.top h1{font-size:clamp(2rem,6vw,3.1rem)}
+header.top .meta{font-family:var(--f-mono);font-size:.78rem;color:var(--muted);line-height:1.5}
+.scale{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+.scale i{display:block;width:60px;height:3px;background:var(--ink)}
+
+/* tabs */
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav.tabs .wrap::-webkit-scrollbar{display:none}
+nav.tabs button{background:none;border:0;padding:12px 12px;white-space:nowrap;color:var(--muted);border-bottom:3px solid transparent;font-weight:700;font-size:.95rem}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+main{padding-block:28px 64px}
+section.panel{display:flex;flex-direction:column;gap:28px}
+
+/* generic blocks */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid > *{min-width:0}
+.prose{max-width:68ch;display:flex;flex-direction:column;gap:12px}
+.lead{font-size:1.12rem}
+ul.clean{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+ul.dots{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 11px;font-size:.85rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;border-radius:4px;padding:1px 6px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.tag.extra{border-style:dashed}
+.sw{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
+.note{border-left:3px solid var(--accent);padding:10px 14px;background:var(--surface-2);border-radius:0 8px 8px 0;font-size:.95rem}
+.why{border-left-color:var(--good)}
+.warn{border-left-color:var(--bad)}
+mark{background:var(--mark);color:inherit;padding:0 2px;border-radius:2px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;font-weight:700}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+/* tree */
+.tree{display:grid;grid-template-columns:repeat(6,minmax(140px,1fr));gap:8px;min-width:880px}
+.tree-scroll{overflow-x:auto;padding-bottom:6px}
+.tree .col{border-radius:8px;overflow:hidden;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column}
+.tree .col > button{border:0;padding:10px;font-weight:700;text-align:left;color:#fff;background:var(--c)}
+:root[data-theme="dark"] .tree .col > button{color:#081016}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tree .col > button{color:#081016}}
+.tree .col ul{list-style:none;margin:0;padding:10px;display:flex;flex-direction:column;gap:4px;font-size:.88rem}
+.tree .col li.sub{font-family:var(--f-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:4px}
+
+/* endosymbiosis */
+.endo{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.endo svg{width:100%;height:auto;display:block}
+.endo figcaption{font-size:.92rem}
+.endo .big{font-family:var(--f-display);font-size:2.4rem;line-height:1}
+
+/* supergroups */
+.sg-layout{display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:start}
+.sg-layout > *{min-width:0}
+.sg-rail{display:flex;flex-direction:column;gap:4px;position:sticky;top:64px}
+.sg-rail button{display:flex;align-items:center;gap:10px;text-align:left;border:1px solid transparent;background:none;padding:9px 10px;border-radius:8px;font-weight:700}
+.sg-rail button[aria-pressed="true"]{background:var(--surface);border-color:var(--line)}
+.sg-rail .num{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);width:20px}
+@media (max-width:760px){
+  .sg-layout{grid-template-columns:1fr}
+  .sg-rail{flex-direction:row;overflow-x:auto;position:static}
+  .sg-rail button{white-space:nowrap}
+}
+.sg-head{display:flex;flex-direction:column;gap:10px;border-top:6px solid var(--c);padding-top:16px}
+.sig{font-family:var(--f-display);font-size:1.35rem;line-height:1.35}
+.sub-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;display:flex;flex-direction:column;gap:10px;border-top:3px solid var(--c)}
+.sub-card h4{margin:0;font-family:var(--f-display);font-weight:400;font-size:1.15rem}
+.sub-card .decode{font-size:.88rem;color:var(--muted)}
+.recall .traits{filter:blur(6px);cursor:pointer;user-select:none;transition:filter .2s}
+.recall .traits.shown{filter:none}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.9rem}
+.toggle input{width:18px;height:18px;accent-color:var(--accent)}
+
+/* tables */
+.table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:900px;font-size:.88rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--surface-2);position:sticky;top:0}
+td.grp{font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.filterbar{display:flex;flex-wrap:wrap;gap:6px}
+.filterbar button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:.85rem;display:inline-flex;align-items:center;gap:6px}
+.filterbar button[aria-pressed="true"]{border-color:var(--ink);background:var(--surface-2);font-weight:700}
+
+/* pairs */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.pair > div{padding:14px 16px;min-width:0}
+.pair > div + div{border-left:1px solid var(--line)}
+.pair .ttl{grid-column:1/-1;padding:10px 16px;background:var(--surface-2);font-weight:700;border-bottom:1px solid var(--line)}
+.pair .nm{font-family:var(--f-display);font-size:1.05rem}
+@media (max-width:520px){.pair{grid-template-columns:1fr}.pair > div + div{border-left:0;border-top:1px solid var(--line)}}
+
+/* key */
+.key{display:flex;flex-direction:column;gap:14px}
+.key .trail{display:flex;flex-wrap:wrap;gap:6px;font-size:.85rem}
+.key .opts{display:flex;flex-direction:column;gap:8px}
+.key .opts button{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:12px 14px}
+.key .opts button:hover{border-color:var(--accent)}
+.key .result{border-top:6px solid var(--c);padding-top:12px}
+
+/* memorize */
+.mnemo{font-family:var(--f-display);font-size:clamp(1.3rem,4vw,1.9rem);line-height:1.3}
+.mnemo b{font-weight:400;border-bottom:3px solid var(--c)}
+.pseudo{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.pseudo .card{display:flex;flex-direction:column;gap:8px}
+.pseudo svg{width:100%;height:110px}
+.sorter .item{font-family:var(--f-display);font-size:1.4rem}
+.sorter .opts{display:flex;flex-wrap:wrap;gap:8px}
+
+/* flashcards */
+.fc-stage{perspective:1200px}
+.fc{position:relative;min-height:260px;border-radius:14px;cursor:pointer;transform-style:preserve-3d;transition:transform .45s}
+.fc.flipped{transform:rotateY(180deg)}
+.fc .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;padding:26px;display:flex;flex-direction:column;justify-content:center;gap:12px;border:1px solid var(--line);background:var(--surface);border-top:6px solid var(--c)}
+.fc .back{transform:rotateY(180deg);background:var(--surface-2)}
+.fc .face .q{font-size:1.15rem}
+.fc .face .a{font-family:var(--f-display);font-size:1.7rem;line-height:1.2}
+.progress{height:6px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+
+/* quiz */
+.modes{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.modes button{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.modes button[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.modes b{font-size:1rem}
+.modes span{font-size:.85rem;color:var(--muted)}
+.qbox{display:flex;flex-direction:column;gap:14px}
+.qtext{font-size:1.15rem;font-weight:700;line-height:1.45}
+.case{background:var(--surface-2);border-radius:8px;padding:12px 14px;font-size:.98rem}
+.opts-q{display:flex;flex-direction:column;gap:8px}
+.opts-q button{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:11px 14px;display:flex;gap:10px}
+.opts-q button .k{font-family:var(--f-mono);color:var(--muted)}
+.opts-q button:hover:not([disabled]){border-color:var(--accent)}
+.opts-q button.right{border-color:var(--good);background:var(--good-bg)}
+.opts-q button.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.opts-q button[disabled]{cursor:default}
+.idrow{display:flex;gap:8px;flex-wrap:wrap}
+.idrow input{flex:1 1 220px;min-width:0;font:inherit;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.fb{border-radius:8px;padding:12px 14px;font-size:.95rem;display:flex;flex-direction:column;gap:6px}
+.fb.ok{background:var(--good-bg);border:1px solid var(--good)}
+.fb.no{background:var(--bad-bg);border:1px solid var(--bad)}
+.fb b.v{font-size:1rem}
+.score{font-family:var(--f-display);font-size:3rem;line-height:1}
+.missed{display:flex;flex-direction:column;gap:10px}
+.missed .card{padding:14px 16px;font-size:.92rem}
+.tabnum{font-variant-numeric:tabular-nums}
+footer{border-top:1px solid var(--line);padding-block:20px;font-size:.85rem;color:var(--muted)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="stack" style="gap:6px">
+      <span class="eyebrow">Lecture 9 · Department of Biology, UP Manila</span>
+      <h1>Protist Field Guide</h1>
+    </div>
+    <div class="stack" style="gap:6px;align-items:flex-end">
+      <div class="scale"><i></i>10 µm</div>
+      <div class="meta">6 supergroups · 22 groups · <span id="qcount"></span> quiz items</div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Sections">
+  <div class="wrap" role="tablist">
+    <button role="tab" data-tab="lesson">Lesson</button>
+    <button role="tab" data-tab="groups">Supergroups</button>
+    <button role="tab" data-tab="compare">Compare &amp; Key</button>
+    <button role="tab" data-tab="memorize">Memorize</button>
+    <button role="tab" data-tab="cards">Flashcards</button>
+    <button role="tab" data-tab="quiz">Quiz</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ============ LESSON ============ -->
+<section class="panel" id="lesson" role="tabpanel">
+  <div class="prose">
+    <span class="eyebrow">Big picture</span>
+    <h2>What a protist is, and why the group is so messy</h2>
+    <p class="lead">A protist is any member of a diverse group of <b>eukaryotic, predominantly unicellular, microscopic organisms</b> that is not a plant, animal, or fungus.</p>
+    <p>That definition is really an exclusion: "protist" collects every eukaryote left over after plants, animals and fungi are removed. Because of that, protists do not share one ancestor that excludes everything else. Some are closer to plants (red and green algae), some are closer to animals and fungi (choanoflagellates, nucleariids). This is why the lecture organizes them into <b>six supergroups</b> based on shared ancestry, and why every group is defined by a <i>structural signature</i> (a groove, sacs under the membrane, a kind of pseudopod, a kind of flagellum) instead of by lifestyle.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card stack" style="gap:10px">
+      <span class="eyebrow">General characteristics (slide 6)</span>
+      <ul class="dots">
+        <li>Mostly <b>aquatic</b></li>
+        <li><b>Mostly unicellular</b>, a few multicellular (kelp, some red and green algae)</li>
+        <li>Have a <b>nucleus and membrane-bound organelles</b> (eukaryotic)</li>
+        <li><b>Autotrophic, heterotrophic, or mixotrophic</b></li>
+        <li><b>Symbiotic, parasitic, or free-living</b></li>
+        <li>Move by <b>pseudopodia, cilia, or flagella</b></li>
+        <li>Reproduce <b>sexually or asexually</b></li>
+      </ul>
+    </div>
+    <div class="card stack" style="gap:10px">
+      <span class="eyebrow">Terms to get right</span>
+      <ul class="clean">
+        <li><b>Autotroph</b>: makes its own food (photosynthesis).</li>
+        <li><b>Heterotroph</b>: takes in organic food (ingests or absorbs).</li>
+        <li><b>Mixotroph</b>: does both. <i>Euglena</i> photosynthesizes in light and absorbs food in the dark.</li>
+        <li><b>Testate / atestate</b>: with or without a shell (test).</li>
+        <li><b>Pellicle</b>: flexible protein layer under the membrane that keeps shape.</li>
+      </ul>
+    </div>
+    <div class="card stack" style="gap:10px">
+      <span class="eyebrow">Learning objectives</span>
+      <ul class="dots">
+        <li>Define protists and classify them into major groups</li>
+        <li>Identify key characteristics of each group</li>
+        <li>Describe their structural and functional diversity</li>
+        <li>Explain their ecological roles and significance</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stack">
+    <div class="prose">
+      <span class="eyebrow">Mechanism</span>
+      <h2>Endosymbiosis: count the membranes</h2>
+      <p>Chloroplasts came from swallowed photosynthesizers. <b>How many times</b> that swallowing happened tells you which supergroup you are in, and you can read it off the number of membranes around the chloroplast.</p>
+    </div>
+    <div class="endo">
+      <figure class="card" style="margin:0">
+        <svg viewBox="0 0 300 170" role="img" aria-label="Primary endosymbiosis: host cell engulfs a cyanobacterium, chloroplast ends with two membranes">
+          <circle cx="80" cy="85" r="62" fill="none" stroke="var(--arc)" stroke-width="3"/>
+          <ellipse cx="80" cy="95" rx="30" ry="18" fill="var(--opi)" opacity=".25" stroke="var(--opi)" stroke-width="2"/>
+          <ellipse cx="80" cy="95" rx="25" ry="13" fill="none" stroke="var(--opi)" stroke-width="2"/>
+          <circle cx="62" cy="58" r="10" fill="none" stroke="var(--muted)" stroke-width="2"/>
+          <text x="54" y="44" font-size="9" fill="var(--muted)" font-family="JetBrains Mono, monospace">nucleus</text>
+          <path d="M150 85 h24" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+          <defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>
+          <text x="190" y="70" font-size="40" fill="var(--ink)" font-family="Young Serif, serif">2</text>
+          <text x="190" y="92" font-size="11" fill="var(--muted)" font-family="JetBrains Mono, monospace">membranes</text>
+          <text x="190" y="120" font-size="11" fill="var(--ink)" font-family="Atkinson Hyperlegible, sans-serif">host ate a</text>
+          <text x="190" y="135" font-size="11" fill="var(--ink)" font-family="Atkinson Hyperlegible, sans-serif">cyanobacterium</text>
+        </svg>
+        <figcaption class="stack" style="gap:6px"><b>Primary endosymbiosis</b><span>A host cell engulfs a <b>cyanobacterium</b>. The chloroplast keeps a <b>double membrane</b>. This is the origin of <b>Archaeplastida</b> (red algae, green algae, land plants, glaucophytes).</span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <svg viewBox="0 0 300 170" role="img" aria-label="Secondary endosymbiosis: host engulfs an alga, chloroplast ends with four membranes and a nucleomorph">
+          <circle cx="80" cy="85" r="62" fill="none" stroke="var(--chr)" stroke-width="3"/>
+          <ellipse cx="80" cy="95" rx="40" ry="28" fill="none" stroke="var(--arc)" stroke-width="2"/>
+          <ellipse cx="80" cy="95" rx="35" ry="23" fill="none" stroke="var(--arc)" stroke-width="2"/>
+          <ellipse cx="80" cy="98" rx="24" ry="13" fill="var(--opi)" opacity=".25" stroke="var(--opi)" stroke-width="2"/>
+          <ellipse cx="80" cy="98" rx="19" ry="9" fill="none" stroke="var(--opi)" stroke-width="2"/>
+          <circle cx="98" cy="80" r="4" fill="var(--muted)"/>
+          <text x="104" y="74" font-size="9" fill="var(--muted)" font-family="JetBrains Mono, monospace">nucleomorph</text>
+          <path d="M150 85 h24" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/>
+          <text x="190" y="70" font-size="40" fill="var(--ink)" font-family="Young Serif, serif">4</text>
+          <text x="190" y="92" font-size="11" fill="var(--muted)" font-family="JetBrains Mono, monospace">membranes</text>
+          <text x="190" y="120" font-size="11" fill="var(--ink)" font-family="Atkinson Hyperlegible, sans-serif">host ate an</text>
+          <text x="190" y="135" font-size="11" fill="var(--ink)" font-family="Atkinson Hyperlegible, sans-serif">alga</text>
+        </svg>
+        <figcaption class="stack" style="gap:6px"><b>Secondary endosymbiosis</b><span>A host engulfs a <b>whole photosynthetic eukaryote (an alga)</b>. Extra wrappings pile up, giving <b>four membranes</b> in the lecture diagram, and the alga's nucleus may survive as a shrunken <b>nucleomorph</b>. This is the origin of plastids in <b>Chromalveolata</b>.</span></figcaption>
+      </figure>
+    </div>
+    <p class="note why"><b>Why it works:</b> every engulfment wraps the prey in the predator's membrane. Cyanobacterium has 2 membranes of its own, which stay as the chloroplast's double membrane. Swallow a whole alga and you add the alga's outer membrane plus the host's food-vacuole membrane, so the count climbs to 4. Membrane counting is evidence about history, the same way rock layers are.</p>
+  </div>
+
+  <div class="stack">
+    <div class="prose">
+      <span class="eyebrow">Classification (slide 7)</span>
+      <h2>The six supergroups</h2>
+      <p>Tap a column to open that supergroup. Groups sitting next to each other on a branch share a closer ancestor. Note where <b>fungi and animals</b> end up: inside Opisthokonta, next to protists.</p>
+    </div>
+    <div class="tree-scroll"><div class="tree" id="tree"></div></div>
+    <p class="note"><b>Connection to newer taxonomy:</b> the slide on Rhizaria says it belongs to the <b>SAR</b> clade (Stramenopiles + Alveolata + Rhizaria). Evidence from genetic studies suggests Stramenopiles and Alveolates group with Rhizaria, so many current textbooks drop "Chromalveolata" and use SAR instead. For your exam, use the lecture's six names; just know why "SAR" shows up.</p>
+  </div>
+
+  <div class="stack">
+    <div class="prose">
+      <span class="eyebrow">Outline parts 3–5</span>
+      <h2>Ecological roles, reproduction, and human health</h2>
+      <p>The lecture outline lists these topics. Items marked <span class="tag extra">beyond slides</span> are standard textbook context added to connect the ideas; the rest come straight from the slides.</p>
+    </div>
+    <div class="grid">
+      <div class="card stack" style="gap:10px">
+        <h3>Ecological roles</h3>
+        <ul class="dots">
+          <li><b>Primary producers</b>: diatoms, dinoflagellates, red and green algae, glaucophytes (freshwater). Marine phytoplankton are estimated to carry out roughly half of Earth's photosynthesis <span class="tag extra">beyond slides</span></li>
+          <li><b>Decomposers</b>: oomycetes (water molds), slime molds</li>
+          <li><b>Reef building</b>: red algae deposit CaCO₃</li>
+          <li><b>Nutrient cycling</b>: red algae; radiolarians and diatoms in the <b>silicon cycle</b></li>
+          <li><b>Food webs</b>: radiolarians, ciliates and forams eat bacteria and smaller protists</li>
+          <li><b>Records of the past</b>: foram tests act as biostratigraphic and paleoclimate markers</li>
+          <li><b>Symbionts</b>: parabasalids in termite guts digest wood <span class="tag extra">beyond slides</span></li>
+        </ul>
+      </div>
+      <div class="card stack" style="gap:10px">
+        <h3>Reproduction &amp; life cycles</h3>
+        <ul class="dots">
+          <li><b>Binary fission</b> (asexual): diplomonads, cercozoa, <i>Entamoeba</i> trophozoites</li>
+          <li><b>Asexual</b>: radiolaria</li>
+          <li><b>Complex life cycle</b>: foraminifera</li>
+          <li><b>Entamoeba</b>: cyst → excystation → trophozoite → encystation</li>
+          <li><b>Plasmodial slime mold</b> (sexual): haploid spores → amoeboid or flagellated cells → fusion (plasmogamy, then karyogamy) → diploid zygote → multinucleate plasmodium → sporangia → <b>meiosis</b> → haploid spores</li>
+          <li><b>Cellular slime mold</b>: single amoebae aggregate → mound → migrating slug → fruiting body → spores</li>
+          <li><b>Fungi</b>: reproduce via spores</li>
+        </ul>
+      </div>
+      <div class="card stack" style="gap:10px">
+        <h3>Human health (PH lens)</h3>
+        <ul class="dots">
+          <li><b><i>Entamoeba histolytica</i></b>: amoebic dysentery and liver abscess. Spread fecal-orally through contaminated food and water, so it matters after floods and in areas without safe water and sanitation</li>
+          <li><b><i>Plasmodium</i></b> (Apicomplexa): malaria. Under the DOH malaria elimination program, most remaining local cases in recent years have come from Palawan <span class="tag extra">beyond slides</span></li>
+          <li><b>Dinoflagellates</b>: red tides cause paralytic shellfish poisoning; BFAR issues shellfish bans <span class="tag extra">beyond slides</span></li>
+          <li><b><i>Giardia</i></b> (diplomonad), <b><i>Trichomonas</i></b> (parabasalid), <b><i>Trypanosoma</i></b> (kinetoplastid) <span class="tag extra">beyond slides</span></li>
+          <li><b>Carrageenan</b> from red algae: the Philippines is one of the world's major producers of carrageenan seaweed</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SUPERGROUPS ============ -->
+<section class="panel" id="groups" role="tabpanel" hidden>
+  <div class="row" style="justify-content:space-between">
+    <div class="prose"><span class="eyebrow">Parts of the lesson</span><h2>Supergroups, one at a time</h2></div>
+    <label class="toggle" for="recallToggle"><input type="checkbox" id="recallToggle"> Recall mode (blur traits, tap to reveal)</label>
+  </div>
+  <div class="sg-layout">
+    <div class="sg-rail" id="sgRail"></div>
+    <div id="sgBody" class="stack" style="gap:20px"></div>
+  </div>
+</section>
+
+<!-- ============ COMPARE ============ -->
+<section class="panel" id="compare" role="tabpanel" hidden>
+  <div class="stack">
+    <div class="prose"><span class="eyebrow">All groups side by side</span><h2>Master comparison table</h2><p>Filter by supergroup. Items with * are textbook context beyond the slides.</p></div>
+    <div class="filterbar" id="cmpFilter"></div>
+    <div class="table-scroll"><table id="cmpTable"></table></div>
+  </div>
+
+  <div class="stack">
+    <div class="prose"><span class="eyebrow">Problem solving</span><h2>Identification key</h2><p>Answer one question at a time about an unknown organism. This is how you should think through a "which group is this?" item on an exam: start with the most diagnostic feature, then narrow.</p></div>
+    <div class="card key" id="key"></div>
+  </div>
+
+  <div class="stack">
+    <div class="prose"><span class="eyebrow">Where students lose points</span><h2>Commonly confused pairs</h2></div>
+    <div class="grid" id="pairs" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))"></div>
+  </div>
+</section>
+
+<!-- ============ MEMORIZE ============ -->
+<section class="panel" id="memorize" role="tabpanel" hidden>
+  <div class="card stack">
+    <span class="eyebrow">Order of the six supergroups</span>
+    <p class="mnemo" id="mnemo"></p>
+    <p class="muted">Excavata · Chromalveolata · Rhizaria · Archaeplastida · Amoebozoa · Opisthokonta</p>
+  </div>
+
+  <div class="stack">
+    <div class="prose"><span class="eyebrow">One image per supergroup</span><h2>If you remember only one thing</h2></div>
+    <div class="grid" id="oneThing"></div>
+  </div>
+
+  <div class="stack">
+    <div class="prose"><span class="eyebrow">Decode the names</span><h2>The names are the definitions</h2><p>Most of these names are Greek or Latin descriptions of the defining trait. Learn the root and you can rebuild the trait during an exam.</p></div>
+    <div class="table-scroll"><table id="decoder" style="min-width:560px"></table></div>
+  </div>
+
+  <div class="stack">
+    <div class="prose"><span class="eyebrow">Shape of the pseudopod</span><h2>Four pseudopod types</h2></div>
+    <div class="pseudo">
+      <div class="card"><svg viewBox="0 0 200 110" aria-hidden="true"><path d="M60 55c-10-30 30-40 45-25c15-25 50-10 40 15c25 5 25 35 0 40c5 25-40 30-50 10c-25 15-55-10-35-40z" fill="var(--amo)" opacity=".3" stroke="var(--amo)" stroke-width="2"/></svg><b>Lobose</b><span>Blunt, rounded lobes. <b>Amoebozoa</b> (gymnamoebas, <i>Entamoeba</i>).</span></div>
+      <div class="card"><svg viewBox="0 0 200 110" aria-hidden="true"><circle cx="100" cy="55" r="22" fill="var(--rhi)" opacity=".3" stroke="var(--rhi)" stroke-width="2"/><g stroke="var(--rhi)" stroke-width="1.5" fill="none"><path d="M78 50q-30-15-60-10"/><path d="M80 65q-25 15-55 30"/><path d="M118 45q30-25 60-30"/><path d="M121 60q30 5 60 20"/><path d="M100 77q5 20-5 30"/></g></svg><b>Filose</b><span>Thin, threadlike. <b>Cercozoa</b> (also nucleariids).</span></div>
+      <div class="card"><svg viewBox="0 0 200 110" aria-hidden="true"><circle cx="100" cy="55" r="20" fill="var(--rhi)" opacity=".3" stroke="var(--rhi)" stroke-width="2"/><g stroke="var(--rhi)" stroke-width="1.2" fill="none"><path d="M80 55L40 20L20 50L45 90L80 60"/><path d="M40 20L60 55L45 90"/><path d="M120 55L160 25L185 55L160 92L120 60"/><path d="M160 25L140 60L160 92"/><path d="M20 50L60 55L80 55"/><path d="M185 55L140 60"/></g></svg><b>Reticulose (reticulopodia)</b><span>Branching, fused into a net. <b>Foraminifera</b>.</span></div>
+      <div class="card"><svg viewBox="0 0 200 110" aria-hidden="true"><circle cx="100" cy="55" r="18" fill="var(--rhi)" opacity=".3" stroke="var(--rhi)" stroke-width="2"/><g stroke="var(--rhi)" stroke-width="2"><line x1="100" y1="37" x2="100" y2="2"/><line x1="100" y1="73" x2="100" y2="108"/><line x1="82" y1="55" x2="30" y2="55"/><line x1="118" y1="55" x2="170" y2="55"/><line x1="87" y1="42" x2="55" y2="10"/><line x1="113" y1="42" x2="145" y2="10"/><line x1="87" y1="68" x2="55" y2="100"/><line x1="113" y1="68" x2="145" y2="100"/></g></svg><b>Axopodia</b><span>Stiff, straight spokes supported by microtubules. <b>Radiolaria</b>.</span></div>
+    </div>
+    <p class="note why"><b>Why the shape matters:</b> blunt lobes are good for crawling and engulfing on a surface, which fits gut and soil amoebae. Thin threads and nets increase surface area, so floating rhizarians can snag prey from open water. That is why lobose = Amoebozoa and thin = Rhizaria is the first split to make.</p>
+  </div>
+
+  <div class="stack">
+    <div class="prose"><span class="eyebrow">Practice drill</span><h2>Wall &amp; skeleton sorter</h2><p>Silica, calcium carbonate, cellulose, chitin. Sort each organism by what its wall or skeleton is made of.</p></div>
+    <div class="card sorter stack" id="sorter"></div>
+  </div>
+
+  <div class="stack">
+    <div class="prose"><span class="eyebrow">How to study this</span><h2>A plan that makes it stick</h2></div>
+    <div class="grid">
+      <div class="card stack" style="gap:8px"><span class="eyebrow">Day 0 · Structure</span><p>Read the Lesson tab once. Then open Supergroups with <b>Recall mode on</b> and try to say each group's traits before tapping to reveal. Saying it before seeing it is what builds memory; re-reading mostly builds familiarity.</p></div>
+      <div class="card stack" style="gap:8px"><span class="eyebrow">Day 1 · Recall</span><p>Run Flashcards in "Trait → Group" direction. Cards you miss come back. Stop when the whole deck is green.</p></div>
+      <div class="card stack" style="gap:8px"><span class="eyebrow">Day 3 · Apply</span><p>Do the Identification and Problem-solving quizzes. Typing the name forces exact spelling (<i>Dictyostelium</i>, <i>histolytica</i>), which multiple choice hides.</p></div>
+      <div class="card stack" style="gap:8px"><span class="eyebrow">Night before · Mix</span><p>Take one Mixed Exam. Then redo only the missed items. Mixing topics (interleaving) trains you to <i>choose</i> the right group, which is what the exam actually asks.</p></div>
+    </div>
+    <div class="card stack" style="gap:10px">
+      <span class="eyebrow">Teach-back prompts (answer out loud, then check)</span>
+      <ol class="dots" style="padding-left:1.3em">
+        <li>Why do apicomplexans, which are parasites, sit next to photosynthetic dinoflagellates?<details><summary class="muted">Check</summary>They share alveoli under the membrane, so they share ancestry. Evidence suggests apicomplexans even keep a remnant plastid (the apicoplast), a leftover of photosynthetic ancestors.</details></li>
+        <li>Why are kelp and red seaweed in different supergroups if both are "seaweed"?<details><summary class="muted">Check</summary>Kelp (brown alga) got its plastid by secondary endosymbiosis and has hairy flagella in its reproductive cells, so it is a stramenopile. Red algae are primary endosymbionts in Archaeplastida. Body form converged; ancestry did not.</details></li>
+        <li>Why are diplomonads and parabasalids missing normal mitochondria?<details><summary class="muted">Check</summary>They live in low-oxygen environments like guts, where aerobic respiration is useless. Evidence suggests they reduced their mitochondria to small remnants rather than never having them.</details></li>
+        <li>Why is the cyst, not the trophozoite, the infective stage of <i>Entamoeba</i>?<details><summary class="muted">Check</summary>The cyst wall survives outside the body and through stomach acid; the trophozoite dies outside the host. So cysts carry the infection from stool to water to the next person.</details></li>
+        <li>Why are fungi in a protist lecture at all?<details><summary class="muted">Check</summary>Because ancestry places fungi (with nucleariids) and animals (with choanoflagellates) inside Opisthokonta. They share a single posterior flagellum on motile cells.</details></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FLASHCARDS ============ -->
+<section class="panel" id="cards" role="tabpanel" hidden>
+  <div class="prose"><span class="eyebrow">Active recall</span><h2>Flashcards</h2><p>Tap the card or press Space to flip. Mark it, and missed cards return later in the deck.</p></div>
+  <div class="row">
+    <label class="eyebrow" for="fcDir">Direction</label>
+    <select id="fcDir" class="btn"><option value="t2g">Trait → Group</option><option value="g2t">Group → Traits</option><option value="vocab">Key terms</option></select>
+    <label class="eyebrow" for="fcGroup">Supergroup</label>
+    <select id="fcGroup" class="btn"></select>
+    <button class="btn" id="fcShuffle">Shuffle &amp; restart</button>
+  </div>
+  <div class="stack" style="max-width:680px;width:100%">
+    <div class="row" style="justify-content:space-between"><span class="mono tabnum" id="fcPos"></span><span class="mono tabnum" id="fcStat"></span></div>
+    <div class="progress"><i id="fcBar"></i></div>
+    <div class="fc-stage"><div class="fc" id="fc" tabindex="0" role="button" aria-label="Flashcard, press to flip"><div class="face front"></div><div class="face back"></div></div></div>
+    <div class="row" style="justify-content:space-between">
+      <button class="btn" id="fcPrev">← Back</button>
+      <div class="row"><button class="btn" id="fcAgain">Again</button><button class="btn primary" id="fcGot">Got it</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="quiz" role="tabpanel" hidden>
+  <div id="quizSetup" class="stack" style="gap:20px">
+    <div class="prose"><span class="eyebrow">Test yourself</span><h2>Quiz</h2><p>Pick a format. Every answer shows an explanation, and you can retry only the ones you missed.</p></div>
+    <div class="modes" id="modes">
+      <button data-mode="mc" aria-pressed="true"><b>Multiple choice</b><span>Pick the group, trait or term.</span></button>
+      <button data-mode="id" aria-pressed="false"><b>Identification</b><span>Type the answer. Small typos are accepted.</span></button>
+      <button data-mode="ps" aria-pressed="false"><b>Problem solving</b><span>Clinical, field and lab cases in steps.</span></button>
+      <button data-mode="mix" aria-pressed="false"><b>Mixed exam</b><span>All three formats shuffled.</span></button>
+    </div>
+    <div class="stack" style="gap:8px"><span class="eyebrow">Topics</span><div class="filterbar" id="quizFilter"></div></div>
+    <div class="row"><label class="eyebrow" for="quizLen">Length</label><select id="quizLen" class="btn"><option value="100" selected>100 items</option><option value="50">50 items</option><option value="25">25 items</option><option value="9999">All available</option></select><button class="btn primary" id="quizStart">Start quiz</button><span class="muted" id="quizAvail"></span></div>
+    <p class="muted" id="bestLine"></p>
+  </div>
+  <div id="quizRun" class="card" hidden></div>
+</section>
+
+</main>
+<footer><div class="wrap">Built from Lecture 9: Protists (Kimberly B. Benjamin, Ph.D., Department of Biology, UP Manila). Items tagged "beyond slides" are added context; check them against your instructor's emphasis.</div></footer>
+
+<script>
+/* ================= DATA ================= */
+const SG = [
+ {id:'exc', n:'Excavata', roman:'I', root:'"excavated" = hollowed out',
+  sig:'A feeding groove scooped out of one side of the cell.',
+  chars:['Unicellular','Flagellated','Varied nutrition','Diverse habitat'],
+  why:'The groove channels water currents from the flagella toward the cell so food particles get swept in. Many excavates live in low-oxygen places like animal guts, which explains the recurring theme of missing or reduced mitochondria and the parasitic lifestyle.',
+  one:'A scoop taken out of the cell',
+  subs:[
+   {n:'Diplomonads', traits:['Lack mitochondria','Two equal-size nuclei','Multiple flagella','Binary fission'], ex:'Giardia (giardiasis)', exExtra:true, dec:'diplo = double + monad = unit, so "double cell" (two identical nuclei look like two cells in one)'},
+   {n:'Parabasalids', traits:['Lack mitochondria','Symbiotic or parasitic','Undulating membrane'], ex:'Trichomonas vaginalis; termite-gut symbionts', exExtra:true, dec:'named for the parabasal body (Golgi) near the base of the flagella'},
+   {n:'Euglenozoa · Kinetoplastids', traits:['Kinetoplast (large DNA mass in a single mitochondrion)','Undulating membrane'], ex:'Trypanosoma (shown among red blood cells on slide 9)', dec:'kineto = movement + plast = body; the DNA sits near the flagellum base'},
+   {n:'Euglenozoa · Euglenids', traits:['Eyespot','Pellicle'], ex:'Euglena (mixotroph)', dec:'eu = true/good + glene = eyeball, so "good eye"'}
+  ]},
+ {id:'chr', n:'Chromalveolata', roman:'II', root:'chroma = color (pigmented plastids) + alveoli = small sacs',
+  sig:'Plastids from secondary endosymbiosis; split into Alveolata (sacs under the membrane) and Stramenopiles (hairy flagella).',
+  chars:['Eukaryotic','Secondary endosymbiosis','Diverse morphology'],
+  why:'Their chloroplasts are second-hand, taken from an engulfed red alga, which is why they look nothing like plants yet photosynthesize. The two subgroups are defined by structures inherited from shared ancestors, not by lifestyle, so free-swimming ciliates, armored dinoflagellates and parasitic apicomplexans all count as alveolates.',
+  one:'Second-hand chloroplasts',
+  subs:[
+   {n:'Alveolata (subgroup)', head:true, traits:['Membrane-bound sacs (alveoli) beneath the plasma membrane','Alveoli provide structural support']},
+   {n:'Ciliates', traits:['Cilia','Pellicle'], ex:'Paramecium', exExtra:true, dec:'cilium = eyelash'},
+   {n:'Dinoflagellates', traits:['Encased in interlocking cellulose plates','2 flagella'], ex:'red-tide species', exExtra:true, dec:'dinos = whirling; the two flagella make them spin'},
+   {n:'Apicomplexa', traits:['Apical complex for host invasion','Microtubules, fibrin and vacuoles clustered asymmetrically at one end of the cell'], ex:'Plasmodium (malaria; slide 11 smear)', dec:'apex = tip + complex'},
+   {n:'Stramenopiles (subgroup)', head:true, traits:['Hairy (stramenopile) flagella','Flagella can be used for locomotion']},
+   {n:'Diatoms', traits:['Unicellular algae','Silica-based cell walls called frustules'], dec:'dia = through + temnein = cut, "cut in two" (two-halved frustule)'},
+   {n:'Brown algae', traits:['Kelp','Large and multicellular'], ex:'kelp; Sargassum', dec:'color from the brown pigment fucoxanthin', decExtra:true},
+   {n:'Oomycetes', traits:['Water molds','Important decomposers'], ex:'Phytophthora (potato blight)', exExtra:true, dec:'oo = egg + mycete = fungus; fungus-like but NOT fungi'}
+  ]},
+ {id:'rhi', n:'Rhizaria', roman:'III', root:'rhiza = root',
+  sig:'Amoeboid with thin filose or net-like (reticulose) pseudopods. Part of the SAR clade.',
+  chars:['Diverse supergroup of mostly unicellular eukaryotes','Belong to the SAR','Amoeboid with filose or reticulopods','Diverse morphologies','Heterotrophic','Marine and freshwater'],
+  why:'Thin root-like pseudopods spread out like a net, giving a large sticky surface to catch prey drifting in the water. Many build mineral shells that protect them and later sink and fossilize, which is why forams and radiolarians matter to geologists and to the silicon cycle.',
+  one:'Root-like threads and nets',
+  subs:[
+   {n:'Cercozoa', traits:['Unicellular, mostly heterotrophic','Filose or reticulose pseudopods, or flagellated','Can be testate or atestate','Binary fission','Diverse in shape and feeding'], dec:'kerkos = tail'},
+   {n:'Foraminifera', traits:['Unicellular','Reticulopodia','Testate: calcium carbonate shells called tests','Tests have multiple chambers and intricate patterns','Complex life cycle','Biostratigraphic markers and paleoclimate records'], dec:'foramen = hole + ferre = bear; tests are perforated'},
+   {n:'Radiolaria', traits:['Unicellular, marine','Siliceous (silica) skeleton with radial symmetry','Spines and intricate lattices','Axopodia','Heterotrophic','Asexual','Silicon cycle and food web'], dec:'radius = ray; skeleton radiates outward'}
+  ]},
+ {id:'arc', n:'Archaeplastida', roman:'IV', root:'archae = ancient + plastid',
+  sig:'Primary endosymbionts: chloroplast from a directly engulfed cyanobacterium (2 membranes).',
+  chars:['Red algae, green algae, land plants, glaucophytes','Primary endosymbionts','Chlorophyll a','Cellulose cell wall','Store starch'],
+  why:'Their ancestor engulfed the cyanobacterium itself, so this is the "original" plastid line. Plants inherited cellulose walls and starch storage from these algae, which is why a seaweed and a mango tree share those traits.',
+  one:'The original, first-hand chloroplast',
+  subs:[
+   {n:'Glaucophyta', traits:['Rare freshwater algae','Chloroplasts called cyanelles','Primary producers in freshwater'], dec:'glaukos = blue-green; cyanelles still resemble cyanobacteria'},
+   {n:'Rhodophyta (red algae)', traits:['Phycoerythrin (a phycobiliprotein)','Lack flagella and centrioles','Reef formation by depositing CaCO₃','Nutrient cycling','Carrageenan'], ex:'Kappaphycus, Eucheuma (PH carrageenan farms)', exExtra:true, dec:'rhodo = rose/red'},
+   {n:'Chloroplastida', traits:['Green algae and land plants','Chlorophyll a and b'], ex:'Volvox, Chlamydomonas', exExtra:true, dec:'chloro = green'}
+  ]},
+ {id:'amo', n:'Amoebozoa', roman:'V', root:'amoibe = change',
+  sig:'Amoeboid movement with blunt, lobe-shaped (lobose) pseudopodia.',
+  chars:['Amoeboid movement','Lobose pseudopodia','Lack flagella','Flexible shape','Heterotrophic'],
+  why:'Lobose pseudopods are pushed out by cytoplasmic streaming, giving broad, flowing lobes that crawl over surfaces and wrap around food. Note one nuance: slime mold life cycles can include flagellated cells (slide 21), so "lack flagella" describes the amoeboid stage.',
+  one:'Blunt, flowing lobes',
+  subs:[
+   {n:'Gymnamoebas', traits:['Amoeboid protist','Free-living','Lobose pseudopod','Naked cytoplasm (no shell)'], ex:'Amoeba proteus', exExtra:true, dec:'gymnos = naked'},
+   {n:'Entamoeba', traits:['Parasitic','Two forms: trophozoite and cyst','Amoeboid movement','Anaerobic','E. histolytica: amoebic dysentery and liver abscess','E. coli: non-pathogenic','Life cycle: cyst → excystation → trophozoite → encystation'], dec:'ent = inside (lives inside the host); histo-lytica = tissue-dissolving'},
+   {n:'Slime molds', traits:['Cellulose in cell walls','Heterotrophs','Life cycle has both amoeboid and spore-producing stages','Plasmodial (Myxomycetes/Myxogastria): Physarum polycephalum, a multinucleate plasmodium','Cellular (Dictyostelia): Dictyostelium discoideum','Protostelid: Ceratiomyxa'], dec:'myxo = slime + mycete = fungus; not true fungi'}
+  ]},
+ {id:'opi', n:'Opisthokonta', roman:'VI', root:'opisthen = behind + kontos = pole',
+  sig:'A single posterior flagellum on motile cells.',
+  chars:['Posterior flagellum','Heterotrophic','Many are multicellular (fungi, animals)'],
+  why:'A flagellum at the back pushes the cell forward, like a human sperm or a chytrid fungal spore. Sharing this odd feature is evidence that fungi and animals descend from a common opisthokont ancestor, which is why your own cells are related to mushrooms.',
+  one:'Pushed from behind by one tail',
+  subs:[
+   {n:'Nucleariids', traits:['Unicellular','Amoeboid morphology','Close relatives of fungi'], dec:'named for their prominent nucleus'},
+   {n:'Choanoflagellates', traits:['Unicellular or colonial flagellate','Collar of microvilli','Closest living relatives of animals (tree on slide 7)'], dec:'choane = funnel/collar'},
+   {n:'Fungi', traits:['Chitinous cell walls','Reproduce via spores'], ex:'Aspergillus, Clavaria, Neurospora crassa', dec:'fungus = mushroom'}
+  ]}
+];
+const SGMAP = Object.fromEntries(SG.map(s=>[s.id,s]));
+const TREE = {
+ exc:['Diplomonads','Parabasalids','Euglenozoans'],
+ chr:[['Alveolates'],'Dinoflagellates','Apicomplexans','Ciliates',['Stramenopiles'],'Diatoms','Golden algae','Brown algae','Oomycetes'],
+ rhi:['Cercozoans','Forams','Radiolarians'],
+ arc:['Red algae','Chlorophytes (green algae)','Charophytes (green algae)','Land plants',['Also: glaucophytes']],
+ amo:['Slime molds','Gymnamoebas','Entamoebas'],
+ opi:['Nucleariids','Fungi','Choanoflagellates','Animals']
+};
+
+const CMP = [
+ ['exc','Diplomonads','Multiple flagella','None','Parasitic','2 equal nuclei; no mitochondria','Giardia*'],
+ ['exc','Parabasalids','Flagella + undulating membrane','None','Symbiotic or parasitic','Undulating membrane; no mitochondria','Trichomonas*'],
+ ['exc','Kinetoplastids','Flagellum + undulating membrane','None','Mostly parasitic*','Kinetoplast','Trypanosoma'],
+ ['exc','Euglenids','Flagellum','Pellicle','Mixotrophic*','Eyespot + pellicle','Euglena'],
+ ['chr','Ciliates','Cilia','Pellicle','Heterotrophic*','Cilia + pellicle','Paramecium*'],
+ ['chr','Dinoflagellates','2 flagella','Cellulose plates','Autotrophic or mixotrophic*','Interlocking cellulose plates','Red-tide species*'],
+ ['chr','Apicomplexa','No cilia/flagella in most stages*','None','Parasitic','Apical complex','Plasmodium'],
+ ['chr','Diatoms','Mostly non-motile*','Silica frustule','Autotrophic','Frustule','Many'],
+ ['chr','Brown algae','Hairy flagella on gametes*','Cellulose*','Autotrophic','Kelp (multicellular)','Kelp'],
+ ['chr','Oomycetes','Hairy flagella on spores*','Cellulose*','Decomposer','Water mold','Phytophthora*'],
+ ['rhi','Cercozoa','Filose pseudopods or flagella','Test or no test','Mostly heterotrophic','Diverse shape & feeding','Many'],
+ ['rhi','Foraminifera','Reticulopodia','CaCO₃ multichambered test','Heterotrophic','Chambered test; fossils','Many'],
+ ['rhi','Radiolaria','Axopodia','Silica, radial','Heterotrophic','Radial spines & lattice','Many'],
+ ['arc','Glaucophyta','—','Cellulose','Autotrophic','Cyanelles','Rare freshwater'],
+ ['arc','Rhodophyta','None (no flagella/centrioles)','Cellulose; deposits CaCO₃','Autotrophic','Phycoerythrin; carrageenan','Kappaphycus*'],
+ ['arc','Chloroplastida','Varies','Cellulose','Autotrophic','Chlorophyll a + b','Green algae, plants'],
+ ['amo','Gymnamoebas','Lobose pseudopods','Naked','Heterotrophic','Naked cytoplasm, free-living','Amoeba proteus*'],
+ ['amo','Entamoeba','Lobose pseudopods','Cyst wall (cyst stage)','Parasitic, anaerobic','Trophozoite + cyst','E. histolytica'],
+ ['amo','Slime molds','Amoeboid; flagellated gametes','Cellulose','Heterotrophic','Plasmodium or aggregation','Physarum, Dictyostelium, Ceratiomyxa'],
+ ['opi','Nucleariids','Amoeboid','None','Heterotrophic','Closest to fungi','—'],
+ ['opi','Choanoflagellates','1 posterior flagellum','None','Heterotrophic','Collar of microvilli','—'],
+ ['opi','Fungi','Posterior flagellum (chytrid spores)*','Chitin','Heterotrophic (absorptive)*','Chitin + spores','Aspergillus, Neurospora']
+];
+
+const PAIRS = [
+ {t:'Two nuclei', a:['Diplomonads','Two <b>equal</b>-size nuclei, multiple flagella, no mitochondria.'], b:['Ciliates','Two <b>unequal</b> nuclei (macro + micro)*, covered in cilia.']},
+ {t:'Undulating membrane', a:['Parabasalids','No mitochondria, single nucleus, symbiotic/parasitic.'], b:['Kinetoplastids','Has a <b>kinetoplast</b> (DNA in its one big mitochondrion).']},
+ {t:'Pellicle', a:['Euglenids','Pellicle + <b>eyespot</b> + flagellum; photosynthetic.'], b:['Ciliates','Pellicle + <b>cilia</b>.']},
+ {t:'Silica', a:['Diatoms','Photosynthetic algae; two-part <b>frustule</b>.'], b:['Radiolaria','Heterotrophic; <b>radial</b> skeleton with axopodia.']},
+ {t:'Calcium carbonate', a:['Foraminifera','Build their own <b>chambered test</b>.'], b:['Red algae','<b>Deposit</b> CaCO₃ that builds reefs.']},
+ {t:'Armor', a:['Dinoflagellates','Interlocking <b>cellulose</b> plates, 2 flagella.'], b:['Diatoms','<b>Silica</b> frustule.']},
+ {t:'The word "plasmodium"', a:['Plasmodial slime mold','<b>plasmodium</b> = multinucleate mass of cytoplasm (a structure).'], b:['<i>Plasmodium</i> (italic genus)','The <b>malaria parasite</b>, an apicomplexan.']},
+ {t:'Looks like a fungus', a:['Oomycetes / slime molds','<b>Cellulose</b> walls. Stramenopile / Amoebozoa.'], b:['True fungi','<b>Chitin</b> walls. Opisthokonta.']},
+ {t:'Amoeboid, but which?', a:['Amoebozoa','<b>Lobose</b> (blunt lobes).'], b:['Rhizaria','<b>Filose / reticulose / axopodia</b> (thin).']},
+ {t:'Cyst stages', a:['Excystation','Trophozoite <b>leaves</b> the cyst (in the intestine).'], b:['Encystation','Trophozoite <b>forms</b> a cyst (to exit in stool).']},
+ {t:'Closest relatives', a:['Nucleariids','Sister to <b>fungi</b>.'], b:['Choanoflagellates','Sister to <b>animals</b>.']},
+ {t:'Endosymbiosis', a:['Primary','Ate a cyanobacterium; <b>2</b> membranes; Archaeplastida.'], b:['Secondary','Ate an alga; <b>4</b> membranes, nucleomorph; Chromalveolata.']}
+];
+
+const DECODE = [
+ ['Excavata','excavatus = hollowed out','the feeding groove'],
+ ['Diplomonad','diplo = double','two equal nuclei'],
+ ['Kinetoplastid','kineto = movement + plast','DNA body near the flagellum'],
+ ['Euglena','eu = good + glene = eye','eyespot'],
+ ['Alveolata','alveolus = small cavity','sacs under the membrane'],
+ ['Dinoflagellate','dinos = whirling','spins on 2 flagella'],
+ ['Apicomplexa','apex = tip','apical complex at one end'],
+ ['Stramenopile','stramen = straw + pilus = hair','hairy flagella'],
+ ['Diatom','diatomos = cut in two','two-halved frustule'],
+ ['Oomycete','oon = egg + mykes = fungus','fungus-like, not fungi'],
+ ['Rhizaria','rhiza = root','root-like pseudopods'],
+ ['Foraminifera','foramen = hole','perforated test'],
+ ['Radiolaria','radius = ray','radial skeleton'],
+ ['Archaeplastida','archaios = ancient','original plastid'],
+ ['Glaucophyta','glaukos = blue-green','cyanelles'],
+ ['Rhodophyta','rhodon = rose','red pigment phycoerythrin'],
+ ['Amoebozoa','amoibe = change','changing shape'],
+ ['Gymnamoeba','gymnos = naked','no shell'],
+ ['histolytica','histo = tissue + lysis = breaking','invades intestinal tissue'],
+ ['Opisthokonta','opisthen = behind + kontos = pole','posterior flagellum'],
+ ['Choanoflagellate','choane = funnel','collar of microvilli']
+];
+
+const SORT = [
+ ['Diatoms','silica'],['Radiolaria','silica'],['Foraminifera','CaCO₃'],['Red algae (reef deposits)','CaCO₃'],
+ ['Dinoflagellates','cellulose'],['Archaeplastida','cellulose'],['Slime molds','cellulose'],['Fungi','chitin']
+];
+
+/* ---------- QUIZ BANKS ---------- */
+const MC = [
+ {g:'intro',q:'Which is NOT one of the general protist characteristics in the lecture?',o:['Possess a nucleus and membrane-bound organelles','Autotrophic, heterotrophic, or mixotrophic','All are multicellular','Locomotion by pseudopodia, cilia, or flagella'],a:2,e:'Protists are mostly unicellular; only a few (like kelp) are multicellular.'},
+ {g:'intro',q:'A mixotrophic protist is one that:',o:['Lives both in water and on land','Can both photosynthesize and take in organic food','Reproduces both sexually and asexually','Has both cilia and flagella'],a:1,e:'Mixo = mixed nutrition. Euglena photosynthesizes in light and absorbs nutrients in the dark.'},
+ {g:'intro',q:'A chloroplast surrounded by two membranes most likely came from:',o:['Primary endosymbiosis','Secondary endosymbiosis','Binary fission','Excystation'],a:0,e:'Engulfing a cyanobacterium directly leaves a double membrane. That is the Archaeplastida signature.'},
+ {g:'intro',q:'In secondary endosymbiosis, the nucleomorph is:',o:['The host cell’s new nucleus','A degenerate nucleus of the engulfed alga','The cyanobacterium’s DNA','A second mitochondrion'],a:1,e:'The swallowed alga’s nucleus shrinks to a remnant called the nucleomorph.'},
+ {g:'exc',q:'Where does the name "Excavata" come from?',o:['They burrow in sediment','A characteristic "excavated" feeding groove','Their hollow silica skeletons','Their loss of mitochondria'],a:1,e:'The name describes cell shape: a groove scooped out of one side.'},
+ {g:'exc',q:'Two equal-size nuclei, multiple flagella, no mitochondria, binary fission. Which group?',o:['Parabasalids','Kinetoplastids','Diplomonads','Ciliates'],a:2,e:'Diplo = double. Ciliates also have two nuclei, but unequal ones, and they are covered in cilia.'},
+ {g:'exc',q:'Which excavate lacks mitochondria, is symbiotic or parasitic, and has an undulating membrane?',o:['Diplomonads','Parabasalids','Euglenids','Oomycetes'],a:1,e:'Parabasalids pair the undulating membrane with absent mitochondria.'},
+ {g:'exc',q:'Which TWO excavate groups lack mitochondria?',o:['Diplomonads and Euglenids','Kinetoplastids and Euglenids','Diplomonads and Parabasalids','Parabasalids and Kinetoplastids'],a:2,e:'Both live in low-oxygen guts. Euglenozoa keep their mitochondria (kinetoplastids even have DNA packed into one).'},
+ {g:'exc',q:'What distinguishes kinetoplastids?',o:['Eyespot and pellicle','Kinetoplast and undulating membrane','Silica frustule','Apical complex'],a:1,e:'Trypanosoma is the kinetoplastid shown among red blood cells on the slide.'},
+ {g:'exc',q:'What distinguishes euglenids?',o:['Kinetoplast and undulating membrane','Hairy flagella','Eyespot and pellicle','Collar of microvilli'],a:2,e:'The eyespot senses light, useful for a photosynthetic cell; the pellicle keeps its shape.'},
+ {g:'chr',q:'What feature defines Alveolata?',o:['Hairy flagella','Membrane-bound sacs beneath the plasma membrane','Calcium carbonate tests','Lobose pseudopodia'],a:1,e:'The alveoli give structural support and unite ciliates, dinoflagellates and apicomplexans.'},
+ {g:'chr',q:'An alveolate covered in hair-like projections with a pellicle is a:',o:['Dinoflagellate','Apicomplexan','Ciliate','Choanoflagellate'],a:2,e:'Ciliates: cilia + pellicle.'},
+ {g:'chr',q:'Encased in interlocking cellulose plates with 2 flagella:',o:['Dinoflagellates','Diatoms','Ciliates','Radiolarians'],a:0,e:'Diatoms use silica; dinoflagellates use cellulose plates.'},
+ {g:'chr',q:'Which group uses an apical complex to invade host cells?',o:['Kinetoplastids','Apicomplexa','Parabasalids','Oomycetes'],a:1,e:'Microtubules, fibrin and vacuoles cluster at one end. Plasmodium is the key example.'},
+ {g:'chr',q:'Stramenopiles are defined by:',o:['Hairy flagella','Alveoli','Axopodia','A single posterior flagellum'],a:0,e:'stramen = straw, pile = hair.'},
+ {g:'chr',q:'Unicellular algae with silica walls called frustules:',o:['Radiolarians','Dinoflagellates','Diatoms','Foraminifera'],a:2,e:'Radiolarians also use silica but are heterotrophic Rhizaria with axopodia.'},
+ {g:'chr',q:'Kelp belongs to:',o:['Red algae','Brown algae (Stramenopiles)','Green algae','Glaucophytes'],a:1,e:'Kelp is a stramenopile in Chromalveolata, not a plant relative.'},
+ {g:'chr',q:'Water molds that are important decomposers:',o:['Oomycetes','Myxomycetes','Nucleariids','Fungi'],a:0,e:'Myxomycetes are plasmodial slime molds (Amoebozoa). Watch the similar names.'},
+ {g:'chr',q:'Chromalveolata obtained their plastids through:',o:['Primary endosymbiosis','Secondary endosymbiosis','Horizontal gene transfer only','They have no plastids'],a:1,e:'Listed as a defining characteristic on the slide.'},
+ {g:'rhi',q:'Rhizaria are amoeboid with which pseudopod types?',o:['Lobose','Filose or reticulose','None; they use cilia','Collar of microvilli'],a:1,e:'Thin pseudopods separate Rhizaria from the lobose Amoebozoa.'},
+ {g:'rhi',q:'Rhizaria belong to which larger clade?',o:['SAR','Opisthokonta','Archaeplastida','Excavata'],a:0,e:'SAR = Stramenopiles + Alveolata + Rhizaria.'},
+ {g:'rhi',q:'Multichambered calcium carbonate tests, reticulopodia, used as biostratigraphic markers:',o:['Radiolaria','Diatoms','Foraminifera','Cercozoa'],a:2,e:'Foram tests fossilize well and record past ocean conditions.'},
+ {g:'rhi',q:'Forams vs. radiolarians: skeleton material?',o:['Forams silica; radiolarians CaCO₃','Forams CaCO₃; radiolarians silica','Both cellulose','Forams chitin; radiolarians silica'],a:1,e:'Radiolarians = radial glass. Forams = chambered chalk.'},
+ {g:'rhi',q:'Radial symmetry, spines, lattices, axopodia, silicon cycle:',o:['Radiolaria','Foraminifera','Dinoflagellates','Gymnamoebas'],a:0,e:'Axopodia are stiff, microtubule-supported spokes.'},
+ {g:'rhi',q:'Mostly heterotrophic, filose pseudopods OR flagella, testate or atestate, very diverse:',o:['Foraminifera','Cercozoa','Radiolaria','Choanoflagellates'],a:1,e:'Cercozoa is the diverse catch-all of Rhizaria.'},
+ {g:'arc',q:'Which set defines Archaeplastida?',o:['Secondary endosymbiosis, silica walls','Primary endosymbiosis, chlorophyll a, cellulose walls, starch','Chitin walls, spores','Lobose pseudopods, heterotrophy'],a:1,e:'Plants inherited these traits from algal ancestors.'},
+ {g:'arc',q:'Rare freshwater algae with chloroplasts called cyanelles:',o:['Rhodophyta','Chloroplastida','Glaucophyta','Euglenids'],a:2,e:'Cyanelles look much like the original cyanobacterium.'},
+ {g:'arc',q:'Phycoerythrin, no flagella or centrioles, CaCO₃ reef-building, carrageenan:',o:['Brown algae','Rhodophyta','Chloroplastida','Dinoflagellates'],a:1,e:'Phycoerythrin absorbs blue-green light that reaches deeper water.'},
+ {g:'arc',q:'Chloroplastida are distinguished by:',o:['Chlorophyll a only','Chlorophyll a and b','Chlorophyll a and phycoerythrin','Chlorophyll a and c'],a:1,e:'Chl b marks the green lineage that gave rise to land plants.'},
+ {g:'arc',q:'Which of these is NOT in Archaeplastida?',o:['Red algae','Glaucophytes','Brown algae','Land plants'],a:2,e:'Brown algae are stramenopiles (Chromalveolata).'},
+ {g:'amo',q:'Amoebozoa are characterized by:',o:['Filose pseudopods and silica tests','Lobose pseudopodia, flexible shape, heterotrophic','Single posterior flagellum','Alveoli'],a:1,e:'Lobose vs. filose separates Amoebozoa from Rhizaria.'},
+ {g:'amo',q:'Free-living amoebas with naked cytoplasm and lobose pseudopods:',o:['Entamoebas','Gymnamoebas','Nucleariids','Cercozoa'],a:1,e:'Gymno = naked.'},
+ {g:'amo',q:'Which species causes amoebic dysentery and liver abscess?',o:['Entamoeba coli','Entamoeba histolytica','Entamoeba gingivalis','Entamoeba nana'],a:1,e:'histo (tissue) + lytic (breaking). E. coli is non-pathogenic.'},
+ {g:'amo',q:'Correct order of the Entamoeba life cycle:',o:['Trophozoite → excystation → cyst → encystation','Cyst → excystation → trophozoite → encystation','Cyst → encystation → trophozoite → excystation','Spore → plasmodium → sporangium'],a:1,e:'Ex- = out of the cyst; en- = into a cyst.'},
+ {g:'amo',q:'Entamoeba is described as:',o:['Aerobic and free-living','Anaerobic and parasitic','Photosynthetic','Colonial'],a:1,e:'Anaerobic, like other gut parasites.'},
+ {g:'amo',q:'A slime mold that exists as one large multinucleate mass (plasmodium):',o:['Dictyostelium discoideum','Physarum polycephalum','Ceratiomyxa','Phytophthora'],a:1,e:'Physarum is the plasmodial (Myxomycete) example.'},
+ {g:'amo',q:'Cellular slime molds are represented by:',o:['Physarum polycephalum','Ceratiomyxa','Dictyostelium discoideum','Kappaphycus'],a:2,e:'Separate amoebae aggregate into a slug and fruiting body.'},
+ {g:'amo',q:'Ceratiomyxa is an example of a:',o:['Plasmodial slime mold','Cellular slime mold','Protostelid slime mold','Water mold'],a:2,e:'The third slime mold type in the lecture.'},
+ {g:'opi',q:'What gives Opisthokonta their name?',o:['Two anterior flagella','A single posterior flagellum','Hairy flagella','A feeding groove'],a:1,e:'opistho = behind, kont = pole.'},
+ {g:'opi',q:'Unicellular or colonial flagellates with a collar of microvilli:',o:['Nucleariids','Choanoflagellates','Ciliates','Diplomonads'],a:1,e:'Choano = collar. Closest living relatives of animals.'},
+ {g:'opi',q:'Amoeboid opisthokonts that are close relatives of fungi:',o:['Nucleariids','Gymnamoebas','Choanoflagellates','Cercozoa'],a:0,e:'Nucleariids ↔ fungi; choanoflagellates ↔ animals.'},
+ {g:'opi',q:'Fungal cell walls are made of:',o:['Cellulose','Silica','Chitin','Calcium carbonate'],a:2,e:'Chitin separates true fungi from fungus-like oomycetes and slime molds.'},
+ {g:'mix',q:'Which wall/skeleton pairing is WRONG?',o:['Diatoms: silica','Foraminifera: calcium carbonate','Dinoflagellates: chitin','Archaeplastida: cellulose'],a:2,e:'Dinoflagellate plates are cellulose.'},
+ {g:'mix',q:'Which two groups both have an undulating membrane?',o:['Parabasalids and kinetoplastids','Diplomonads and ciliates','Euglenids and diatoms','Forams and radiolarians'],a:0,e:'Tell them apart by the kinetoplast (and mitochondria).'},
+ {g:'mix',q:'Which two groups both have a pellicle?',o:['Euglenids and ciliates','Diatoms and dinoflagellates','Fungi and oomycetes','Forams and cercozoa'],a:0,e:'Euglenids add an eyespot; ciliates add cilia.'}
+];
+
+const ID = [
+ {g:'exc',q:'Supergroup named for a characteristic feeding groove',a:['Excavata']},
+ {g:'exc',q:'Excavate group with two equal-size nuclei and multiple flagella',a:['Diplomonads','Diplomonad']},
+ {g:'exc',q:'Excavate lacking mitochondria with an undulating membrane; symbiotic or parasitic',a:['Parabasalids','Parabasalid']},
+ {g:'exc',q:'Euglenozoan group with an eyespot and pellicle',a:['Euglenids','Euglenid']},
+ {g:'exc',q:'Large mass of DNA inside the single mitochondrion of kinetoplastids',a:['Kinetoplast']},
+ {g:'chr',q:'Membrane-bound sacs beneath the plasma membrane of alveolates',a:['Alveoli','Alveolus']},
+ {g:'chr',q:'Alveolate group with cilia and a pellicle',a:['Ciliates','Ciliate']},
+ {g:'chr',q:'Alveolates encased in interlocking cellulose plates with 2 flagella',a:['Dinoflagellates','Dinoflagellate']},
+ {g:'chr',q:'Structure apicomplexans use to invade host cells',a:['Apical complex']},
+ {g:'chr',q:'Type of flagella that defines Stramenopiles',a:['Hairy flagella','Hairy','Stramenopile flagella']},
+ {g:'chr',q:'Silica-based cell wall of a diatom',a:['Frustule','Frustules']},
+ {g:'chr',q:'Brown alga example given in the lecture',a:['Kelp']},
+ {g:'chr',q:'Water molds that are important decomposers',a:['Oomycetes','Oomycete']},
+ {g:'rhi',q:'Larger clade that includes Rhizaria (three-letter acronym)',a:['SAR']},
+ {g:'rhi',q:'Calcium carbonate shell of a foraminiferan',a:['Test','Tests']},
+ {g:'rhi',q:'Net-like pseudopodia of forams',a:['Reticulopodia','Reticulopods','Reticulose pseudopodia']},
+ {g:'rhi',q:'Stiff, radiating pseudopodia of radiolarians',a:['Axopodia','Axopods']},
+ {g:'rhi',q:'Rhizarian group that can be testate or atestate, with filose pseudopods or flagella',a:['Cercozoa','Cercozoans']},
+ {g:'arc',q:'Name for the chloroplasts of glaucophytes',a:['Cyanelles','Cyanelle']},
+ {g:'arc',q:'Red phycobiliprotein pigment of red algae',a:['Phycoerythrin']},
+ {g:'arc',q:'Gel extracted from red algae, used in food',a:['Carrageenan','Carageenan','Carrageenin']},
+ {g:'arc',q:'Supergroup whose members are primary endosymbionts',a:['Archaeplastida']},
+ {g:'arc',q:'Major group of Archaeplastida with chlorophyll a and b',a:['Chloroplastida','Chloroplastids','Green algae and plants']},
+ {g:'amo',q:'Pseudopod type characteristic of Amoebozoa',a:['Lobose','Lobopodia','Lobose pseudopodia']},
+ {g:'amo',q:'Free-living amoebas with naked cytoplasm',a:['Gymnamoebas','Gymnamoeba','Gymnamoebae']},
+ {g:'amo',q:'Species that causes amoebic dysentery and liver abscess',a:['Entamoeba histolytica','E. histolytica','E histolytica','histolytica']},
+ {g:'amo',q:'Non-pathogenic Entamoeba species named in the lecture',a:['Entamoeba coli','E. coli','E coli']},
+ {g:'amo',q:'Active, feeding form of Entamoeba',a:['Trophozoite','Trophozoites']},
+ {g:'amo',q:'Stage where a trophozoite forms a cyst',a:['Encystation']},
+ {g:'amo',q:'Stage where a trophozoite emerges from a cyst',a:['Excystation']},
+ {g:'amo',q:'Multinucleate cell mass of plasmodial slime molds',a:['Plasmodium']},
+ {g:'amo',q:'Example of a plasmodial slime mold (genus and species)',a:['Physarum polycephalum','Physarum']},
+ {g:'amo',q:'Example of a cellular slime mold (genus and species)',a:['Dictyostelium discoideum','Dictyostelium']},
+ {g:'amo',q:'Example of a protostelid slime mold',a:['Ceratiomyxa']},
+ {g:'opi',q:'Opisthokont group with a collar of microvilli',a:['Choanoflagellates','Choanoflagellate']},
+ {g:'opi',q:'Amoeboid opisthokonts that are close relatives of fungi',a:['Nucleariids','Nucleariid']},
+ {g:'opi',q:'Material of fungal cell walls',a:['Chitin']},
+ {g:'opi',q:'Supergroup defined by a single posterior flagellum',a:['Opisthokonta','Opisthokonts']},
+ {g:'intro',q:'Degenerate nucleus left after secondary endosymbiosis',a:['Nucleomorph']},
+ {g:'intro',q:'Nutrition type that combines photosynthesis and taking in food',a:['Mixotrophic','Mixotroph','Mixotrophy']}
+];
+
+const PS = [
+ {g:'amo',title:'Evacuation center outbreak',text:'After a typhoon, several evacuees in a Marikina evacuation center develop bloody diarrhea. One has a tender, enlarged liver. Stool microscopy shows round cysts with four nuclei.',
+  steps:[
+   {q:'Most likely organism?',o:['Giardia lamblia','Entamoeba histolytica','Entamoeba coli','Plasmodium falciparum'],a:1,e:'Bloody diarrhea (dysentery) + liver abscess + quadrinucleate cysts point to E. histolytica. E. coli is non-pathogenic.'},
+   {q:'Which stage was swallowed and caused infection?',o:['Trophozoite','Mature cyst','Sporangium','Plasmodium'],a:1,e:'Cysts survive outside the body and in stomach acid; they are ingested in contaminated food and water.'},
+   {q:'Which stage invades the intestinal wall and reaches the liver?',o:['Cyst','Trophozoite','Spore','Zygote'],a:1,e:'Trophozoites invade the mucosa and can travel through the bloodstream to liver, brain and lungs.'},
+   {q:'Type the supergroup of this organism.',id:['Amoebozoa'],e:'Entamoeba is an amoebozoan: lobose pseudopods, heterotrophic, anaerobic parasite.'},
+   {q:'Which public health measure targets the actual transmission route?',o:['Mosquito nets','Safe drinking water and proper sanitation','Avoiding shellfish','Vaccination of livestock'],a:1,e:'Fecal-oral transmission: cysts leave in stool and enter through water and food.'}
+  ]},
+ {g:'amo',title:'Excystation arithmetic',text:'From the life-cycle figure: when one mature cyst excysts, a single trophozoite with four nuclei emerges. Each nucleus divides once and the cytoplasm divides three times, so each cyst yields eight small trophozoites.',
+  steps:[
+   {q:'How many trophozoites come from one mature cyst?',id:['8','eight'],e:'4 nuclei → each divides once → 8 nuclei → 8 trophozoites.'},
+   {q:'A person swallows 25 mature cysts and all excyst. How many trophozoites at most, before any binary fission?',id:['200'],e:'25 × 8 = 200.'},
+   {q:'Those trophozoites then multiply by binary fission. After 3 rounds, how many from the 200?',id:['1600'],e:'Each round doubles: 200 × 2³ = 1,600. This is why a small dose of cysts can cause heavy infection.'}
+  ]},
+ {g:'chr',title:'Fever from Palawan',text:'A patient who recently worked in rural Palawan has cyclical fever and chills. A thin blood smear shows small ring-shaped bodies inside red blood cells, similar to slide 11.',
+  steps:[
+   {q:'Likely genus?',o:['Trypanosoma','Plasmodium','Entamoeba','Giardia'],a:1,e:'Ring forms inside RBCs indicate malaria parasites.'},
+   {q:'Which subgroup does it belong to?',o:['Kinetoplastids','Apicomplexa','Ciliates','Diplomonads'],a:1,e:'Plasmodium is an apicomplexan.'},
+   {q:'Type the structure it uses to enter red blood cells.',id:['Apical complex'],e:'The apical complex clusters microtubules, fibrin and vacuoles at one end for host invasion.'},
+   {q:'Which feature does it share with dinoflagellates and ciliates?',o:['Silica frustule','Alveoli under the plasma membrane','Hairy flagella','Collar of microvilli'],a:1,e:'All three are Alveolata.'}
+  ]},
+ {g:'intro',title:'Count the membranes',text:'Electron micrographs of three algae show: Alga X has a chloroplast with 2 membranes and phycoerythrin. Alga Y has a chloroplast with 4 membranes, a tiny extra nucleus near it, and a silica frustule. Alga Z has 2 membranes and chlorophyll a and b.',
+  steps:[
+   {q:'Alga X came from which kind of endosymbiosis?',o:['Primary','Secondary'],a:0,e:'2 membranes = engulfed cyanobacterium directly.'},
+   {q:'Type the group of Alga X.',id:['Rhodophyta','Red algae','Red alga'],e:'Phycoerythrin is the red-algal pigment.'},
+   {q:'The "tiny extra nucleus" in Alga Y is called a:',o:['Kinetoplast','Nucleomorph','Micronucleus','Cyanelle'],a:1,e:'Remnant nucleus of the engulfed alga.'},
+   {q:'Type the group of Alga Y.',id:['Diatoms','Diatom'],e:'Secondary plastid + silica frustule = diatom (Stramenopiles, Chromalveolata).'},
+   {q:'Alga Z belongs to:',o:['Glaucophyta','Chloroplastida','Brown algae','Dinoflagellates'],a:1,e:'Chlorophyll a + b = green lineage.'}
+  ]},
+ {g:'rhi',title:'Core sample',text:'A geologist drilling sediment off Mindoro finds microscopic, multi-chambered shells that fizz in dilute acid (a test for calcium carbonate). Deeper layers contain different shell species.',
+  steps:[
+   {q:'Type the group that made these shells.',id:['Foraminifera','Forams','Foram'],e:'Multi-chambered CaCO₃ tests.'},
+   {q:'Why can the changing species tell the geologist the age of each layer?',o:['Shells are radioactive','Species appeared and disappeared at known times, so they act as biostratigraphic markers','Shells grow larger every year','Shells absorb sunlight'],a:1,e:'Biostratigraphy uses fossil assemblages to date and correlate rock layers.'},
+   {q:'If the shells had dissolved NOT in acid but were glassy and radially spined, the group would be:',o:['Radiolaria','Diatoms','Cercozoa','Red algae'],a:0,e:'Glassy (silica) + radial spines = radiolarians.'}
+  ]},
+ {g:'chr',title:'Shellfish ban',text:'BFAR announces a shellfish ban in a bay after a red tide. Water samples show armored cells made of interlocking plates, each with two flagella.',
+  steps:[
+   {q:'Type the group.',id:['Dinoflagellates','Dinoflagellate'],e:'Interlocking cellulose plates + 2 flagella.'},
+   {q:'Their plates are made of:',o:['Silica','Cellulose','Chitin','Calcium carbonate'],a:1,e:'Cellulose. Silica belongs to diatoms.'},
+   {q:'Which supergroup?',o:['Excavata','Chromalveolata','Rhizaria','Archaeplastida'],a:1,e:'Dinoflagellates are alveolates in Chromalveolata.'}
+  ]},
+ {g:'amo',title:'Starving amoebae',text:'In a lab, single amoeboid cells feeding on bacteria run out of food. Within hours they stream together into a mound, form a migrating slug, then a stalked fruiting body that releases spores.',
+  steps:[
+   {q:'This is a:',o:['Plasmodial slime mold','Cellular slime mold','Protostelid slime mold','Oomycete'],a:1,e:'Individual cells aggregate but keep separate membranes.'},
+   {q:'Type the model organism shown in the lecture for this group.',id:['Dictyostelium discoideum','Dictyostelium'],e:'Dictyostelium discoideum.'},
+   {q:'How does a plasmodial slime mold differ?',o:['It is one giant multinucleate cell (plasmodium)','It has chitin walls','It photosynthesizes','It has a collar of microvilli'],a:0,e:'Physarum forms a single mass of cytoplasm with many nuclei.'},
+   {q:'In the plasmodial slime mold life cycle, where does meiosis occur?',o:['In the feeding plasmodium','In the sporangium, producing haploid spores','In the flagellated gametes','It never occurs'],a:1,e:'Diploid plasmodium → sporangia → meiosis → haploid spores.'}
+  ]},
+ {g:'chr',title:'Fungus or not?',text:'A fuzzy white growth appears on a dead fish in a pond. Under the microscope its walls stain for cellulose, not chitin, and its swimming spores have one hairy flagellum.',
+  steps:[
+   {q:'Is it a true fungus?',o:['Yes, because it is fuzzy and decomposes','No, because cellulose walls and hairy flagella place it with stramenopiles'],a:1,e:'True fungi have chitin and are opisthokonts.'},
+   {q:'Type the group.',id:['Oomycetes','Oomycete','Water molds','Water mold'],e:'Oomycetes (water molds), important decomposers.'},
+   {q:'If the walls were chitin and the spores had a single posterior smooth flagellum, it would be placed in:',o:['Opisthokonta','Chromalveolata','Amoebozoa','Rhizaria'],a:0,e:'Chitin + posterior flagellum = fungus (opisthokont).'}
+  ]},
+ {g:'arc',title:'Seaweed farm in Tawi-Tawi',text:'A farmer grows red seaweed (Kappaphycus) for export to carrageenan processors. A visiting student notices the seaweed thrives a few meters below the surface.',
+  steps:[
+   {q:'Type the division of this seaweed.',id:['Rhodophyta','Red algae'],e:'Kappaphycus is a red alga.'},
+   {q:'Which pigment lets it use the light that reaches deeper water?',o:['Chlorophyll b','Phycoerythrin','Fucoxanthin','Carotene only'],a:1,e:'Phycoerythrin absorbs blue-green light, which penetrates deeper than red light.'},
+   {q:'Which trait would you NOT expect in this organism?',o:['Cellulose cell wall','Starch storage','Flagellated sperm','Chlorophyll a'],a:2,e:'Red algae lack flagella and centrioles.'}
+  ]},
+ {g:'exc',title:'Unknown gut flagellate',text:'A stool sample shows a pear-shaped flagellate with several flagella. You need to decide between a diplomonad and a parabasalid.',
+  steps:[
+   {q:'Which single observation best settles it?',o:['Presence of mitochondria','Two equal nuclei vs. one nucleus with an undulating membrane','Whether it is unicellular','Whether it moves'],a:1,e:'Both lack mitochondria and are flagellated; diplomonads have 2 equal nuclei, parabasalids have an undulating membrane.'},
+   {q:'You see two identical nuclei side by side. Type the group.',id:['Diplomonads','Diplomonad'],e:'Diplo = double.'},
+   {q:'How does this group reproduce, per the lecture?',o:['Binary fission','Spores','Conjugation only','Budding'],a:0,e:'Binary fission.'}
+  ]}
+];
+
+/* ---------- EXPANDED BANKS (100+ per format) ---------- */
+MC.push(
+ {g:'intro',q:'Protists are best described as:',o:['Prokaryotic and unicellular','Eukaryotic, mostly unicellular and microscopic','All photosynthetic and multicellular','Fungi that live in water'],a:1,e:'Slide 5 definition: diverse eukaryotic, predominantly unicellular, microscopic organisms.'},
+ {g:'intro',q:'According to the lecture, protists reproduce:',o:['Only asexually','Only sexually','Sexually or asexually','Only by spores'],a:2,e:'Both modes occur across the group.'},
+ {g:'intro',q:'In primary endosymbiosis, the engulfed organism was a:',o:['Red alga','Cyanobacterium','Diatom','Green alga'],a:1,e:'A photosynthetic bacterium became the chloroplast.'},
+ {g:'intro',q:'In secondary endosymbiosis, the engulfed organism was:',o:['A cyanobacterium','A mitochondrion','A photosynthetic eukaryote (alga)','A virus'],a:2,e:'The host swallowed an alga that already had a chloroplast.'},
+ {g:'intro',q:'Why is "protist" not a natural (single-ancestor) group?',o:['Its members lack nuclei','It is defined by exclusion, so some members are closer to plants or animals than to other protists','All protists are parasites','All protists are multicellular'],a:1,e:'Protists are the eukaryotes left after removing plants, animals and fungi.'},
+ {g:'intro',q:'How many supergroups does the lecture use?',o:['Four','Five','Six','Eight'],a:2,e:'Excavata, Chromalveolata, Rhizaria, Archaeplastida, Amoebozoa, Opisthokonta.'},
+ {g:'intro',q:'On the classification tree, animals and fungi sit inside:',o:['Amoebozoa','Opisthokonta','Archaeplastida','Excavata'],a:1,e:'Both share a single posterior flagellum ancestry.'},
+ {g:'intro',q:'On the classification tree, land plants sit inside:',o:['Archaeplastida','Chromalveolata','Rhizaria','Opisthokonta'],a:0,e:'With red algae, chlorophytes and charophytes.'},
+ {g:'intro',q:'Which is a way protists move, per the lecture?',o:['Pseudopodia, cilia, or flagella','Only flagella','Only by water currents','Muscle contraction'],a:0,e:'All three locomotor structures appear across protists.'},
+ {g:'exc',q:'Which set describes Excavata as a whole?',o:['Unicellular, flagellated, varied nutrition, diverse habitat','Multicellular, non-motile, autotrophic','Amoeboid with lobose pseudopods','Chitin walls and spores'],a:0,e:'Slide 8 characteristics.'},
+ {g:'exc',q:'Diplomonads reproduce by:',o:['Spores','Binary fission','Conjugation','Budding'],a:1,e:'Listed on slide 9.'},
+ {g:'exc',q:'Parabasalids are described as:',o:['Free-living photosynthesizers','Symbiotic or parasitic','Marine heterotrophs with tests','Decomposers with hairy flagella'],a:1,e:'Some live helpfully in termite guts; others, like Trichomonas, are parasites.'},
+ {g:'exc',q:'Euglenozoa includes which two groups?',o:['Diplomonads and parabasalids','Kinetoplastids and euglenids','Ciliates and dinoflagellates','Diatoms and brown algae'],a:1,e:'Both are Euglenozoa within Excavata.'},
+ {g:'exc',q:'Trypanosoma is a:',o:['Euglenid','Kinetoplastid','Diplomonad','Apicomplexan'],a:1,e:'It has a kinetoplast and an undulating membrane.'},
+ {g:'exc',q:'Why does a euglenid have an eyespot?',o:['To detect prey','To sense light for photosynthesis','To store starch','To attach to hosts'],a:1,e:'A photosynthetic cell benefits from swimming toward light.'},
+ {g:'exc',q:'Giardia belongs to:',o:['Parabasalids','Diplomonads','Kinetoplastids','Ciliates'],a:1,e:'Its two equal nuclei give it a "face-like" look.'},
+ {g:'exc',q:'Why do diplomonads and parabasalids lack normal mitochondria?',o:['They live in low-oxygen environments like guts','They are prokaryotes','They are photosynthetic','They live only in deep ocean vents'],a:0,e:'Aerobic respiration offers little benefit without oxygen; evidence suggests mitochondria were reduced.'},
+ {g:'chr',q:'Which pair describes Chromalveolata characteristics?',o:['Primary endosymbiosis, uniform shape','Secondary endosymbiosis, diverse morphology','Chitin walls, spores','Lobose pseudopods, no flagella'],a:1,e:'Slides 10 and 12.'},
+ {g:'chr',q:'Which three groups make up Alveolata?',o:['Diatoms, brown algae, oomycetes','Ciliates, dinoflagellates, apicomplexa','Forams, radiolaria, cercozoa','Diplomonads, parabasalids, euglenozoa'],a:1,e:'All share alveoli under the membrane.'},
+ {g:'chr',q:'What is the function of alveoli, per the lecture?',o:['Photosynthesis','Structural support','Locomotion','Digestion'],a:1,e:'Membrane-bound sacs provide structural support.'},
+ {g:'chr',q:'Which of these is a stramenopile?',o:['Ciliates','Apicomplexa','Diatoms','Foraminifera'],a:2,e:'Diatoms, brown algae, golden algae and oomycetes are stramenopiles.'},
+ {g:'chr',q:'The apical complex consists of:',o:['Silica plates','Microtubules, fibrin and vacuoles clustered at one end','A collar of microvilli','Two equal nuclei'],a:1,e:'Asymmetrically distributed at one end of the cell.'},
+ {g:'chr',q:'Golden algae appear on the tree under:',o:['Alveolates','Stramenopiles','Rhizaria','Archaeplastida'],a:1,e:'With diatoms, brown algae and oomycetes.'},
+ {g:'chr',q:'Which group causes red tides?',o:['Dinoflagellates','Ciliates','Radiolarians','Glaucophytes'],a:0,e:'Blooms of toxic dinoflagellates; linked to paralytic shellfish poisoning.'},
+ {g:'chr',q:'Paramecium belongs to:',o:['Ciliates','Dinoflagellates','Euglenids','Gymnamoebas'],a:0,e:'Covered in cilia, with a pellicle.'},
+ {g:'chr',q:'Oomycetes resemble fungi but differ because they:',o:['Are photosynthetic','Have cellulose walls and hairy flagella','Have chitin walls','Are prokaryotes'],a:1,e:'Those traits place them with stramenopiles.'},
+ {g:'chr',q:'Why do apicomplexans need an apical complex?',o:['To photosynthesize','To penetrate host cells','To build silica shells','To swim with cilia'],a:1,e:'All apicomplexans are parasites that must enter host cells.'},
+ {g:'rhi',q:'Which characteristic applies to Rhizaria?',o:['Autotrophic only','Heterotrophic, marine and freshwater','Chitin walls','Single posterior flagellum'],a:1,e:'Slides 14–16.'},
+ {g:'rhi',q:'Foram tests are made of:',o:['Silica','Calcium carbonate','Chitin','Cellulose'],a:1,e:'Multichambered CaCO₃ shells.'},
+ {g:'rhi',q:'Paleoclimatologists use foram shells to:',o:['Measure ocean depth today','Reconstruct past environments','Make carrageenan','Detect red tides'],a:1,e:'Shell chemistry and species record past conditions.'},
+ {g:'rhi',q:'Radiolaria reproduce:',o:['Sexually only','Asexually','By spores in sporangia','By conjugation'],a:1,e:'Listed as asexual on slide 13.'},
+ {g:'rhi',q:'Radiolaria live in:',o:['Freshwater only','Marine environments','Soil','Animal guts'],a:1,e:'Unicellular marine protists.'},
+ {g:'rhi',q:'Cercozoa reproduce by:',o:['Binary fission','Spores','Conjugation','Budding'],a:0,e:'Slide 14.'},
+ {g:'rhi',q:'"Testate" means the organism:',o:['Has a shell (test)','Lacks a nucleus','Is parasitic','Has two flagella'],a:0,e:'Atestate = no shell.'},
+ {g:'rhi',q:'Which rhizarian is noted for a complex life cycle?',o:['Foraminifera','Radiolaria','Cercozoa','None'],a:0,e:'Listed on slide 13.'},
+ {g:'rhi',q:'Radiolarians contribute to:',o:['The nitrogen cycle only','The silicon cycle and food web','Carrageenan production','Reef building with CaCO₃'],a:1,e:'Their silica skeletons cycle silicon.'},
+ {g:'arc',q:'Archaeplastida store food as:',o:['Glycogen','Starch','Oil','Chitin'],a:1,e:'Plants inherited starch storage.'},
+ {g:'arc',q:'Archaeplastida cell walls are made of:',o:['Chitin','Silica','Cellulose','Calcium carbonate'],a:2,e:'Slide 17.'},
+ {g:'arc',q:'Glaucophytes are primary producers in:',o:['Marine reefs','Freshwater environments','Deserts','Animal guts'],a:1,e:'Rare freshwater algae.'},
+ {g:'arc',q:'Red algae contribute to reef formation by:',o:['Depositing CaCO₃','Producing silica','Secreting chitin','Building cellulose plates'],a:0,e:'Coralline red algae cement reefs.'},
+ {g:'arc',q:'Red algae lack:',o:['Chlorophyll a','Cell walls','Flagella and centrioles','Plastids'],a:2,e:'No flagellated stage at all.'},
+ {g:'arc',q:'Phycoerythrin is a type of:',o:['Phycobiliprotein','Chlorophyll','Carotenoid','Lipid'],a:0,e:'Slide 18.'},
+ {g:'arc',q:'On the tree, the green-algal group closest to land plants is:',o:['Chlorophytes','Charophytes','Red algae','Glaucophytes'],a:1,e:'Charophytes and land plants share a branch.'},
+ {g:'amo',q:'Amoebozoa lack:',o:['Nuclei','Flagella (amoeboid stage)','Pseudopodia','Cytoplasm'],a:1,e:'They move by lobose pseudopods instead.'},
+ {g:'amo',q:'Gymnamoebas differ from Entamoeba in being:',o:['Free-living','Parasitic','Photosynthetic','Shelled'],a:0,e:'Entamoeba is parasitic.'},
+ {g:'amo',q:'The infective stage of Entamoeba is the:',o:['Trophozoite','Cyst','Sporangium','Plasmodium'],a:1,e:'Ingested in contaminated food and water.'},
+ {g:'amo',q:'Slime mold cell walls contain:',o:['Chitin','Cellulose','Silica','Peptidoglycan'],a:1,e:'Slide 24.'},
+ {g:'amo',q:'Slime mold life cycles include:',o:['Only amoeboid stages','Both amoeboid and spore-producing stages','Only flagellated stages','No reproductive stages'],a:1,e:'Slide 21.'},
+ {g:'amo',q:'Plasmodial slime molds are also called:',o:['Dictyostelia','Myxomycetes (Myxogastria)','Oomycetes','Protostelids'],a:1,e:'Myxo = slime.'},
+ {g:'amo',q:'Cellular slime molds are also called:',o:['Myxomycetes','Dictyostelia','Ceratiomyxa','Gymnamoebas'],a:1,e:'After Dictyostelium.'},
+ {g:'amo',q:'In the plasmodial slime mold life cycle, spores are:',o:['Haploid (n)','Diploid (2n)','Multinucleate','Flagellated adults'],a:0,e:'Meiosis in the sporangium makes haploid spores.'},
+ {g:'amo',q:'Entamoeba trophozoites multiply by:',o:['Binary fission','Spores','Conjugation','Meiosis'],a:0,e:'From the life-cycle figure on slide 23.'},
+ {g:'amo',q:'After excystation, trophozoites migrate to the:',o:['Stomach','Large intestine','Lungs first','Kidneys'],a:1,e:'Slide 23 figure.'},
+ {g:'opi',q:'Opisthokonta are:',o:['Autotrophic','Heterotrophic','Chemosynthetic','Mixotrophic only'],a:1,e:'Slide 25.'},
+ {g:'opi',q:'Fungi reproduce via:',o:['Spores','Binary fission only','Cysts','Frustules'],a:0,e:'Slide 25.'},
+ {g:'opi',q:'Aspergillus and Neurospora are examples of:',o:['Fungi','Choanoflagellates','Slime molds','Oomycetes'],a:0,e:'Pictured on slide 25.'},
+ {g:'opi',q:'Choanoflagellates are the closest living relatives of:',o:['Fungi','Animals','Plants','Slime molds'],a:1,e:'They share a branch with animals on the tree.'},
+ {g:'opi',q:'Which opisthokont is amoeboid?',o:['Nucleariids','Choanoflagellates','Fungi','None'],a:0,e:'Amoeboid morphology; relatives of fungi.'},
+ {g:'mix',q:'Which of these is autotrophic?',o:['Diatoms','Radiolaria','Foraminifera','Cercozoa'],a:0,e:'The three rhizarians are heterotrophic.'},
+ {g:'mix',q:'Which organism uses axopodia?',o:['Foraminifera','Radiolaria','Gymnamoebas','Cercozoa'],a:1,e:'Forams use reticulopodia.'},
+ {g:'mix',q:'Which of these lacks mitochondria?',o:['Parabasalids','Euglenids','Ciliates','Diatoms'],a:0,e:'Parabasalids and diplomonads lack them.'},
+ {g:'mix',q:'Which organism is described as anaerobic?',o:['Entamoeba','Euglena','Kelp','Physarum'],a:0,e:'Slide 23.'},
+ {g:'mix',q:'Which is a blood parasite?',o:['Plasmodium','Paramecium','Euglena','Physarum'],a:0,e:'Infects red blood cells.'},
+ {g:'mix',q:'Which pair are both "fungus-like" but NOT true fungi?',o:['Oomycetes and slime molds','Fungi and nucleariids','Diatoms and kelp','Forams and radiolaria'],a:0,e:'Both have cellulose, not chitin.'},
+ {g:'mix',q:'Which group is NOT amoeboid?',o:['Gymnamoebas','Foraminifera','Ciliates','Nucleariids'],a:2,e:'Ciliates move with cilia.'},
+ {g:'mix',q:'Which two supergroups contain photosynthetic members with plastids?',o:['Rhizaria and Amoebozoa','Chromalveolata and Archaeplastida','Opisthokonta and Amoebozoa','Rhizaria and Opisthokonta'],a:1,e:'Plus euglenids in Excavata.'}
+);
+ID.push(
+ {g:'intro',q:'Nutrition type of protists that make their own food',a:['Autotrophic','Autotroph','Autotrophy']},
+ {g:'intro',q:'Nutrition type of protists that take in organic food',a:['Heterotrophic','Heterotroph','Heterotrophy']},
+ {g:'intro',q:'Organism engulfed in primary endosymbiosis',a:['Cyanobacterium','Cyanobacteria']},
+ {g:'intro',q:'Number of membranes around a chloroplast from primary endosymbiosis',a:['2','Two']},
+ {g:'intro',q:'Number of membranes around a chloroplast from secondary endosymbiosis (lecture diagram)',a:['4','Four']},
+ {g:'intro',q:'Kind of endosymbiosis that produced the plastids of Chromalveolata',a:['Secondary','Secondary endosymbiosis']},
+ {g:'intro',q:'Clade name SAR stands for (three groups)',a:['Stramenopiles Alveolata Rhizaria','Stramenopiles Alveolates Rhizaria']},
+ {g:'exc',q:'Excavate group that contains kinetoplastids and euglenids',a:['Euglenozoa','Euglenozoans']},
+ {g:'exc',q:'Light-sensing structure of euglenids',a:['Eyespot','Stigma']},
+ {g:'exc',q:'Flexible protein layer under the membrane of euglenids and ciliates',a:['Pellicle']},
+ {g:'exc',q:'Wavy membrane found in parabasalids and kinetoplastids',a:['Undulating membrane']},
+ {g:'exc',q:'Mode of reproduction of diplomonads',a:['Binary fission']},
+ {g:'exc',q:'Diplomonad genus that causes giardiasis',a:['Giardia','Giardia lamblia','Giardia intestinalis']},
+ {g:'exc',q:'Kinetoplastid genus shown among red blood cells (sleeping sickness)',a:['Trypanosoma','Trypanosomes']},
+ {g:'exc',q:'Excavate group with a single large mitochondrion holding a DNA mass',a:['Kinetoplastids','Kinetoplastid']},
+ {g:'exc',q:'Number of nuclei in a diplomonad',a:['2','Two']},
+ {g:'chr',q:'Genus that causes malaria',a:['Plasmodium']},
+ {g:'chr',q:'Chromalveolata subgroup defined by hairy flagella',a:['Stramenopiles','Stramenophiles','Stramenopile']},
+ {g:'chr',q:'Chromalveolata subgroup defined by sacs beneath the plasma membrane',a:['Alveolata','Alveolates']},
+ {g:'chr',q:'Number of flagella in dinoflagellates',a:['2','Two']},
+ {g:'chr',q:'Material of dinoflagellate plates',a:['Cellulose']},
+ {g:'chr',q:'Multicellular stramenopiles that include kelp',a:['Brown algae','Brown alga','Phaeophyta']},
+ {g:'chr',q:'Fourth stramenopile group on the tree (besides diatoms, brown algae, oomycetes)',a:['Golden algae','Golden alga']},
+ {g:'chr',q:'Common name for oomycetes',a:['Water molds','Water mold','Water moulds']},
+ {g:'chr',q:'Ciliate genus commonly studied in labs (slipper-shaped)',a:['Paramecium']},
+ {g:'chr',q:'Phenomenon caused by dinoflagellate blooms that leads to shellfish bans',a:['Red tide','Red tides']},
+ {g:'rhi',q:'Supergroup of amoeboid protists with filose or reticulose pseudopods',a:['Rhizaria','Rhizarians']},
+ {g:'rhi',q:'Type of pseudopod of cercozoa (threadlike)',a:['Filose','Filopodia','Filose pseudopods']},
+ {g:'rhi',q:'Skeleton material of radiolaria',a:['Silica','Siliceous','Silicon dioxide']},
+ {g:'rhi',q:'Symmetry of the radiolarian skeleton',a:['Radial','Radial symmetry']},
+ {g:'rhi',q:'Element cycle radiolarians contribute to',a:['Silicon','Silicon cycle']},
+ {g:'rhi',q:'Use of fossil foram tests to date and correlate rock layers',a:['Biostratigraphy','Biostratigraphic markers']},
+ {g:'rhi',q:'Field that reconstructs past climates, using forams',a:['Paleoclimatology','Palaeoclimatology']},
+ {g:'rhi',q:'Term for a protist WITHOUT a shell',a:['Atestate']},
+ {g:'rhi',q:'Term for a protist WITH a shell',a:['Testate']},
+ {g:'rhi',q:'Rhizarian group with multichambered calcium carbonate tests',a:['Foraminifera','Forams','Foram']},
+ {g:'rhi',q:'Rhizarian group with a silica skeleton and axopodia',a:['Radiolaria','Radiolarians']},
+ {g:'arc',q:'Storage carbohydrate of Archaeplastida',a:['Starch']},
+ {g:'arc',q:'Cell wall material of Archaeplastida',a:['Cellulose']},
+ {g:'arc',q:'Chlorophyll shared by all Archaeplastida',a:['Chlorophyll a','Chl a','a']},
+ {g:'arc',q:'Division name of red algae',a:['Rhodophyta','Rhodophytes']},
+ {g:'arc',q:'Minor archaeplastid group with cyanelles',a:['Glaucophyta','Glaucophytes']},
+ {g:'arc',q:'Mineral red algae deposit when building reefs',a:['Calcium carbonate','CaCO3']},
+ {g:'arc',q:'Green-algal group closest to land plants on the tree',a:['Charophytes','Charophyta']},
+ {g:'arc',q:'Red alga genus farmed in the Philippines for carrageenan',a:['Kappaphycus','Eucheuma']},
+ {g:'amo',q:'Supergroup characterized by lobose pseudopodia',a:['Amoebozoa']},
+ {g:'amo',q:'Resistant, infective form of Entamoeba',a:['Cyst','Cysts']},
+ {g:'amo',q:'Number of nuclei in a mature E. histolytica cyst',a:['4','Four']},
+ {g:'amo',q:'Oxygen requirement of Entamoeba',a:['Anaerobic','Anaerobe']},
+ {g:'amo',q:'Intestinal disease caused by E. histolytica',a:['Amoebic dysentery','Amebic dysentery','Amoebiasis','Amebiasis']},
+ {g:'amo',q:'Organ where E. histolytica commonly forms an abscess',a:['Liver']},
+ {g:'amo',q:'Type of slime mold that Dictyostelium represents',a:['Cellular','Cellular slime mold']},
+ {g:'amo',q:'Type of slime mold that Ceratiomyxa represents',a:['Protostelid','Protostelid slime mold','Protostelids']},
+ {g:'amo',q:'Type of slime mold that forms a multinucleate plasmodium',a:['Plasmodial','Plasmodial slime mold','Myxomycetes']},
+ {g:'amo',q:'Material in slime mold cell walls',a:['Cellulose']},
+ {g:'amo',q:'Structure in which slime mold spores form',a:['Sporangium','Sporangia']},
+ {g:'amo',q:'Division that restores the haploid condition in the sporangium',a:['Meiosis']},
+ {g:'amo',q:'Fusion of cytoplasm in the slime mold life cycle',a:['Plasmogamy']},
+ {g:'amo',q:'Fusion of nuclei in the slime mold life cycle',a:['Karyogamy']},
+ {g:'opi',q:'Position of the opisthokont flagellum',a:['Posterior']},
+ {g:'opi',q:'Opisthokont group with chitin walls that reproduces by spores',a:['Fungi','Fungus']},
+ {g:'opi',q:'Living group most closely related to choanoflagellates',a:['Animals','Animalia','Metazoa']},
+ {g:'mix',q:'Meaning of the Greek root "gymno" (as in Gymnamoeba)',a:['Naked']},
+ {g:'mix',q:'Meaning of the Greek root "rhiza" (as in Rhizaria)',a:['Root']}
+);
+PS.push(
+ {g:'mix',title:'Pond water survey',text:'A drop of pond water shows four cells. A: slipper-shaped, covered in short hairs. B: green, one flagellum, a red light-sensing spot. C: glassy two-part box, photosynthetic. D: shapeless blob with blunt lobes, no shell.',
+  steps:[
+   {q:'Type the group of cell A.',id:['Ciliates','Ciliate'],e:'Cilia + slipper shape (Paramecium-like).'},
+   {q:'Type the group of cell B.',id:['Euglenids','Euglenid','Euglena'],e:'Eyespot + flagellum + green.'},
+   {q:'Type the group of cell C.',id:['Diatoms','Diatom'],e:'Silica frustule in two halves.'},
+   {q:'Type the group of cell D.',id:['Gymnamoebas','Gymnamoeba','Amoebozoa'],e:'Free-living, naked, lobose.'},
+   {q:'Which cells belong to Chromalveolata?',o:['A and C','B and D','A and B','C and D'],a:0,e:'Ciliates (Alveolata) and diatoms (Stramenopiles). B is Excavata, D is Amoebozoa.'}
+  ]},
+ {g:'exc',title:'Termite gut',text:'Termites eat wood but cannot digest cellulose on their own. Their guts hold flagellates that lack mitochondria and have an undulating membrane. Without them, the termites starve.',
+  steps:[
+   {q:'Type the group of these flagellates.',id:['Parabasalids','Parabasalid'],e:'Undulating membrane + no mitochondria.'},
+   {q:'This relationship is best described as:',o:['Symbiotic (mutualism)','Parasitic','Free-living','Predatory'],a:0,e:'Both partners benefit; the lecture lists parabasalids as symbiotic or parasitic.'},
+   {q:'Why can they survive without mitochondria here?',o:['The termite gut is low in oxygen','They photosynthesize','They live on the termite’s skin','They use the termite’s mitochondria'],a:0,e:'Aerobic respiration matters little in an anaerobic gut.'},
+   {q:'Type their supergroup.',id:['Excavata'],e:'Parabasalids are excavates.'}
+  ]},
+ {g:'exc',title:'Clinic specimen',text:'A wet mount from a patient at a reproductive health clinic shows a pear-shaped flagellate with a wavy membrane along one side and a single nucleus.',
+  steps:[
+   {q:'Type the group.',id:['Parabasalids','Parabasalid'],e:'Undulating membrane, one nucleus (Trichomonas vaginalis).'},
+   {q:'What organelle would you NOT find?',o:['Nucleus','Mitochondria (normal)','Flagella','Plasma membrane'],a:1,e:'Parabasalids lack mitochondria.'},
+   {q:'If it had a kinetoplast instead, it would be a:',o:['Kinetoplastid','Diplomonad','Ciliate','Euglenid'],a:0,e:'Kinetoplastids also have an undulating membrane.'}
+  ]},
+ {g:'intro',title:'Membrane bookkeeping',text:'Each engulfment wraps the prey in the host’s membrane. A cyanobacterium has 2 membranes. Use the lecture model.',
+  steps:[
+   {q:'Membranes around a chloroplast after primary endosymbiosis?',id:['2','Two'],e:'The cyanobacterium’s two membranes remain.'},
+   {q:'Membranes after secondary endosymbiosis (lecture diagram)?',id:['4','Four'],e:'The alga’s membrane and the host vacuole membrane add on.'},
+   {q:'Which supergroup has the 2-membrane condition?',o:['Archaeplastida','Chromalveolata','Rhizaria','Amoebozoa'],a:0,e:'Primary endosymbionts.'},
+   {q:'The nucleomorph is the remnant of:',o:['The host nucleus','The engulfed alga’s nucleus','A mitochondrion','A cyanobacterium'],a:1,e:'Degenerate nucleus of the swallowed alga.'}
+  ]},
+ {g:'mix',title:'Kelp forest vs. coral reef',text:'A marine biology field trip compares a cold-water kelp forest with a tropical reef where pink crusts of coralline algae cement the coral.',
+  steps:[
+   {q:'Type the group kelp belongs to.',id:['Brown algae','Brown alga'],e:'Multicellular stramenopile.'},
+   {q:'Kelp’s supergroup:',o:['Archaeplastida','Chromalveolata','Opisthokonta','Rhizaria'],a:1,e:'Stramenopiles are in Chromalveolata.'},
+   {q:'Type the mineral coralline red algae deposit.',id:['Calcium carbonate','CaCO3'],e:'They help build reefs.'},
+   {q:'Coralline algae’s supergroup:',o:['Archaeplastida','Chromalveolata','Excavata','Amoebozoa'],a:0,e:'Red algae are primary endosymbionts.'}
+  ]},
+ {g:'mix',title:'Silica shortage',text:'A coastal sea runs low on dissolved silica after a large bloom. Two protist groups from the lecture build skeletons or walls from silica.',
+  steps:[
+   {q:'Which two groups need silica?',o:['Diatoms and radiolaria','Forams and red algae','Dinoflagellates and ciliates','Fungi and oomycetes'],a:0,e:'Frustules and siliceous skeletons.'},
+   {q:'Which of the two is photosynthetic?',o:['Diatoms','Radiolaria'],a:0,e:'Radiolaria are heterotrophic.'},
+   {q:'Type the pseudopod type of the other group.',id:['Axopodia','Axopods'],e:'Stiff, radiating.'},
+   {q:'If the habitat were a freshwater lake, which of the two would you expect there?',o:['Diatoms','Radiolaria'],a:0,e:'Radiolaria are marine only.'}
+  ]},
+ {g:'rhi',title:'Microfossil lab',text:'Three microfossils under the scope. X: chambered, chalky, fizzes in acid. Y: glassy, radially symmetric with spines. Z: glassy, two-halved box with fine pores, from a photosynthesizer.',
+  steps:[
+   {q:'Type X.',id:['Foraminifera','Forams','Foram'],e:'CaCO₃ chambered test.'},
+   {q:'Type Y.',id:['Radiolaria','Radiolarians'],e:'Silica, radial.'},
+   {q:'Type Z.',id:['Diatoms','Diatom'],e:'Silica frustule.'},
+   {q:'Which two belong to Rhizaria?',o:['X and Y','Y and Z','X and Z','All three'],a:0,e:'Diatoms are stramenopiles.'}
+  ]},
+ {g:'mix',title:'Two blood smears',text:'Smear 1: small rings inside red blood cells. Smear 2: slender, wavy cells swimming between red blood cells, each with an undulating membrane.',
+  steps:[
+   {q:'Type the genus in smear 1.',id:['Plasmodium'],e:'Ring forms inside RBCs.'},
+   {q:'Type the genus in smear 2.',id:['Trypanosoma'],e:'Extracellular, undulating membrane.'},
+   {q:'Smear 2 belongs to:',o:['Kinetoplastids','Apicomplexa','Diplomonads','Ciliates'],a:0,e:'Euglenozoa within Excavata.'},
+   {q:'Type the DNA structure unique to the smear 2 group.',id:['Kinetoplast'],e:'DNA mass in a single mitochondrion.'}
+  ]},
+ {g:'amo',title:'Barangay water problem',text:'A barangay chlorinates its water tank, but amoebiasis cases continue. Stool exams of some residents also show Entamoeba coli.',
+  steps:[
+   {q:'Which stage most likely survived and spread the infection?',o:['Cyst','Trophozoite','Sporangium','Plasmodium'],a:0,e:'Cysts tolerate routine chlorination better than many bacteria.'},
+   {q:'Best household measure while this is fixed:',o:['Boil drinking water','Use mosquito nets','Avoid sunlight','Cook only shellfish'],a:0,e:'Boiling kills cysts.'},
+   {q:'Which stage dies quickly outside the body?',o:['Trophozoite','Cyst'],a:0,e:'Trophozoites are fragile.'},
+   {q:'Does E. coli (the amoeba) itself need treatment?',o:['No, it is non-pathogenic','Yes, it causes liver abscess'],a:0,e:'Non-pathogenic per the lecture, though finding it shows fecal-oral exposure.'}
+  ]},
+ {g:'amo',title:'Ploidy tracker',text:'Follow one plasmodial slime mold (Physarum) through its life cycle on slide 24.',
+  steps:[
+   {q:'Spores are:',o:['Haploid (n)','Diploid (2n)'],a:0,e:'Made by meiosis.'},
+   {q:'Type the process where two cells’ cytoplasm fuse.',id:['Plasmogamy'],e:'First fusion step.'},
+   {q:'Type the process where their nuclei fuse.',id:['Karyogamy'],e:'Produces the 2n zygote.'},
+   {q:'The feeding plasmodium is:',o:['Haploid','Diploid, multinucleate'],a:1,e:'Grows from the zygote.'},
+   {q:'Type the division that happens in the sporangium.',id:['Meiosis'],e:'Restores the haploid condition.'}
+  ]},
+ {g:'mix',title:'Wall-stain lab',text:'Four samples are stained for wall material. A: chitin-positive, makes spores. B: cellulose, fuzzy growth, hairy-flagellated spores. C: silica, radial spines, heterotrophic. D: cellulose plates, two flagella.',
+  steps:[
+   {q:'Type A.',id:['Fungi','Fungus'],e:'Chitin + spores.'},
+   {q:'Type B.',id:['Oomycetes','Oomycete','Water molds'],e:'Cellulose + hairy flagella.'},
+   {q:'Type C.',id:['Radiolaria','Radiolarians'],e:'Silica + radial.'},
+   {q:'Type D.',id:['Dinoflagellates','Dinoflagellate'],e:'Cellulose plates + 2 flagella.'}
+  ]},
+ {g:'opi',title:'Where animals came from',text:'A sponge’s feeding cells (choanocytes) have a flagellum ringed by a collar of microvilli. A free-living single cell looks almost identical.',
+  steps:[
+   {q:'Type the free-living group.',id:['Choanoflagellates','Choanoflagellate'],e:'Collar of microvilli.'},
+   {q:'Type the supergroup.',id:['Opisthokonta','Opisthokonts'],e:'Single posterior flagellum.'},
+   {q:'What does the resemblance suggest?',o:['Choanoflagellates are closest living relatives of animals','Sponges are fungi','Choanoflagellates are plants','Nothing'],a:0,e:'Shown on the slide 7 tree.'},
+   {q:'Type the amoeboid opisthokonts closest to fungi.',id:['Nucleariids','Nucleariid'],e:'The fungal side of the branch.'}
+  ]},
+ {g:'arc',title:'Light at depth',text:'Water absorbs red light within the top few meters; blue-green light reaches deeper. A diver finds red seaweed at 30 m but few green algae.',
+  steps:[
+   {q:'Which light reaches deepest?',o:['Blue-green','Red','Infrared','Orange'],a:0,e:'Long wavelengths are absorbed first.'},
+   {q:'Type the pigment that lets red algae use it.',id:['Phycoerythrin'],e:'Absorbs blue-green light.'},
+   {q:'Red algae look red because phycoerythrin:',o:['Reflects red light','Absorbs red light','Emits heat','Contains iron'],a:0,e:'We see the color that is reflected.'}
+  ]},
+ {g:'exc',title:'Giardia trophozoite',text:'A child who drank from an untreated stream has watery diarrhea. Stool shows a pear-shaped flagellate with two identical nuclei.',
+  steps:[
+   {q:'Type the group.',id:['Diplomonads','Diplomonad'],e:'Two equal nuclei.'},
+   {q:'How many flagella, per the lecture?',o:['One','Two','Multiple'],a:2,e:'Multiple flagella.'},
+   {q:'Normal mitochondria?',o:['Present','Absent'],a:1,e:'Diplomonads lack mitochondria.'}
+  ]},
+ {g:'chr',title:'Parasite with a plant past',text:'Apicomplexans are all parasites, yet they are grouped with photosynthetic dinoflagellates.',
+  steps:[
+   {q:'Type the structure they share with dinoflagellates and ciliates.',id:['Alveoli','Alveolus'],e:'Sacs beneath the membrane.'},
+   {q:'Type the structure apicomplexans use to enter host cells.',id:['Apical complex'],e:'At one end of the cell.'},
+   {q:'What evidence suggests photosynthetic ancestors?',o:['A remnant plastid (apicoplast)','Silica walls','Chitin walls','A collar of microvilli'],a:0,e:'Beyond slides: evidence suggests most apicomplexans keep a non-photosynthetic plastid.'},
+   {q:'Their supergroup:',o:['Chromalveolata','Excavata','Rhizaria','Amoebozoa'],a:0,e:'Alveolata subgroup.'}
+  ]},
+ {g:'exc',title:'Light and dark culture',text:'Euglena grows in a lit flask with no added food. In a dark flask it survives only if organic nutrients are added.',
+  steps:[
+   {q:'Type its nutrition mode.',id:['Mixotrophic','Mixotroph','Mixotrophy'],e:'Both photosynthesis and absorption.'},
+   {q:'Type the structure it uses to sense light.',id:['Eyespot'],e:'Euglenid trait.'},
+   {q:'Its supergroup:',o:['Excavata','Archaeplastida','Chromalveolata','Opisthokonta'],a:0,e:'Euglenozoa are excavates.'},
+   {q:'Type the excavate subgroup it belongs to.',id:['Euglenozoa','Euglenids'],e:'Euglenids within Euglenozoa.'}
+  ]},
+ {g:'mix',title:'Pseudopod ID',text:'Four amoeboid cells. 1: broad, blunt lobes. 2: fine threads. 3: branching threads fused into a net, inside a chalky chambered shell. 4: stiff straight spokes around a glassy skeleton.',
+  steps:[
+   {q:'Type the supergroup of cell 1.',id:['Amoebozoa'],e:'Lobose.'},
+   {q:'Type the rhizarian group of cell 2.',id:['Cercozoa','Cercozoans'],e:'Filose.'},
+   {q:'Type cell 3.',id:['Foraminifera','Forams','Foram'],e:'Reticulopodia + CaCO₃ test.'},
+   {q:'Type cell 4.',id:['Radiolaria','Radiolarians'],e:'Axopodia + silica.'}
+  ]}
+);
+
+const VOCAB = [
+ ['Protist','Diverse eukaryotic, predominantly unicellular, microscopic organisms','intro'],
+ ['Mixotrophic','Can both photosynthesize and ingest/absorb food','intro'],
+ ['Primary endosymbiosis','Host engulfs a cyanobacterium; chloroplast with 2 membranes','intro'],
+ ['Secondary endosymbiosis','Host engulfs an alga; chloroplast with 4 membranes','intro'],
+ ['Nucleomorph','Degenerate nucleus of the engulfed alga','intro'],
+ ['Kinetoplast','Large DNA mass in the single mitochondrion of kinetoplastids','exc'],
+ ['Undulating membrane','Wavy membrane fold along the cell; parabasalids and kinetoplastids','exc'],
+ ['Pellicle','Flexible protein layer under the membrane; euglenids and ciliates','exc'],
+ ['Alveoli','Membrane-bound sacs under the plasma membrane; structural support','chr'],
+ ['Apical complex','Cluster of microtubules, fibrin, vacuoles at one end; host invasion','chr'],
+ ['Frustule','Silica cell wall of a diatom','chr'],
+ ['Test','Shell; CaCO₃ and multichambered in forams','rhi'],
+ ['Reticulopodia','Net-like pseudopods (forams)','rhi'],
+ ['Axopodia','Stiff radiating pseudopods supported by microtubules (radiolaria)','rhi'],
+ ['Filose pseudopod','Thin, threadlike pseudopod (cercozoa)','rhi'],
+ ['Cyanelles','Chloroplasts of glaucophytes','arc'],
+ ['Phycoerythrin','Red phycobiliprotein pigment of red algae','arc'],
+ ['Carrageenan','Gel extracted from red algae','arc'],
+ ['Lobose pseudopod','Blunt, lobe-shaped pseudopod (Amoebozoa)','amo'],
+ ['Trophozoite','Active feeding form of Entamoeba','amo'],
+ ['Cyst','Resistant, infective form of Entamoeba','amo'],
+ ['Excystation','Trophozoite emerges from cyst','amo'],
+ ['Encystation','Trophozoite forms a cyst','amo'],
+ ['Plasmodium (slime mold)','Large multinucleate mass of cytoplasm','amo'],
+ ['Collar of microvilli','Ring of microvilli around the flagellum (choanoflagellates)','opi'],
+ ['Chitin','Fungal cell wall polysaccharide','opi']
+];
+
+const KEY = {
+ start:{q:'How does the organism move or feed?',o:[['Amoeboid: it extends pseudopodia','pseudo'],['It has cilia or flagella, or is non-motile','nonamo']]},
+ pseudo:{q:'What do the pseudopods look like?',o:[['Blunt, rounded lobes (lobose)','lobose'],['Thin threads, nets, or stiff spokes','thin'],['Amoeboid cell, close relative of fungi','R:Nucleariids:opi']]},
+ lobose:{q:'What else do you know?',o:[['Gut parasite with cyst and trophozoite stages','R:Entamoeba:amo'],['Forms a multinucleate plasmodium, or cells aggregate into a fruiting body','R:Slime molds:amo'],['Free-living with naked cytoplasm','R:Gymnamoebas:amo']]},
+ thin:{q:'Which describes it?',o:[['Net-like reticulopodia and a chambered CaCO₃ test','R:Foraminifera:rhi'],['Stiff axopodia and a radial silica skeleton','R:Radiolaria:rhi'],['Filose pseudopods or flagella; shell optional; very diverse','R:Cercozoa:rhi']]},
+ nonamo:{q:'Does it photosynthesize (has chloroplasts)?',o:[['Yes','photo'],['No','hetero']]},
+ photo:{q:'What is the chloroplast like?',o:[['2 membranes (primary endosymbiosis)','prim'],['4 membranes (secondary endosymbiosis)','sec'],['Flagellate with an eyespot and pellicle','R:Euglenids:exc']]},
+ prim:{q:'Which pigment or plastid feature?',o:[['Phycoerythrin; no flagella or centrioles','R:Rhodophyta (red algae):arc'],['Chloroplasts called cyanelles; rare freshwater','R:Glaucophyta:arc'],['Chlorophyll a and b','R:Chloroplastida:arc']]},
+ sec:{q:'What is its body or covering like?',o:[['Silica frustule, unicellular','R:Diatoms:chr'],['Interlocking cellulose plates, 2 flagella','R:Dinoflagellates:chr'],['Large multicellular seaweed (kelp)','R:Brown algae:chr']]},
+ hetero:{q:'Which feature stands out?',o:[['Covered in cilia, has a pellicle','R:Ciliates:chr'],['Parasite with an apical complex','R:Apicomplexa:chr'],['Single posterior flagellum with a collar of microvilli','R:Choanoflagellates:opi'],['Chitin cell walls, reproduces by spores','R:Fungi:opi'],['Fungus-like water mold with cellulose walls','R:Oomycetes:chr'],['Flagellate with no mitochondria','nomito'],['Flagellate with a kinetoplast and undulating membrane','R:Kinetoplastids:exc']]},
+ nomito:{q:'Look at the nuclei and membrane.',o:[['Two equal-size nuclei, multiple flagella','R:Diplomonads:exc'],['One nucleus, undulating membrane','R:Parabasalids:exc']]}
+};
+
+/* ================= HELPERS ================= */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const col=id=>`var(--${id})`;
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const store={get(k,d){try{const v=localStorage.getItem('protist:'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('protist:'+k,JSON.stringify(v))}catch(e){}}};
+const italicize=s=>esc(s).replace(/\b(Giardia|Trichomonas vaginalis|Trichomonas|Trypanosoma|Euglena|Paramecium|Plasmodium|Phytophthora|Sargassum|Kappaphycus|Eucheuma|Volvox|Chlamydomonas|Amoeba proteus|Physarum polycephalum|Dictyostelium discoideum|Ceratiomyxa|Aspergillus|Clavaria|Neurospora crassa|E\. histolytica|E\. coli|Entamoeba)\b/g,'<i>$1</i>');
+const groupName=g=>g==='intro'?'Intro':g==='mix'?'Mixed':SGMAP[g].n;
+
+/* ================= TABS ================= */
+const TABS=['lesson','groups','compare','memorize','cards','quiz'];
+function showTab(t){
+  if(!TABS.includes(t)) t='lesson';
+  TABS.forEach(id=>{$('#'+id).hidden=id!==t});
+  $$('nav.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));
+  store.set('tab',t);
+}
+$$('nav.tabs button').forEach(b=>b.addEventListener('click',()=>{showTab(b.dataset.tab);try{history.replaceState(null,'','#'+b.dataset.tab)}catch(e){}window.scrollTo({top:0})}));
+
+/* ================= LESSON: tree ================= */
+$('#tree').innerHTML=SG.map(s=>`<div class="col" style="--c:${col(s.id)}"><button data-go="${s.id}">${s.roman}. ${s.n}</button><ul>${TREE[s.id].map(x=>Array.isArray(x)?`<li class="sub">${esc(x[0])}</li>`:`<li>${esc(x)}</li>`).join('')}</ul></div>`).join('');
+$('#tree').addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){openGroup(b.dataset.go);showTab('groups');window.scrollTo({top:0})}});
+
+/* ================= SUPERGROUPS ================= */
+let curSG=store.get('sg','exc');
+$('#sgRail').innerHTML=SG.map(s=>`<button data-sg="${s.id}" aria-pressed="false"><span class="num">${s.roman}</span><span class="sw" style="background:${col(s.id)}"></span>${s.n}</button>`).join('');
+$('#sgRail').addEventListener('click',e=>{const b=e.target.closest('[data-sg]');if(b)openGroup(b.dataset.sg)});
+function openGroup(id){
+  curSG=id;store.set('sg',id);
+  const s=SGMAP[id];
+  $$('#sgRail button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.sg===id));
+  $('#sgBody').style.setProperty('--c',col(id));
+  $('#sgBody').innerHTML=`
+   <div class="sg-head">
+     <span class="eyebrow">Supergroup ${s.roman} · ${esc(s.root)}</span>
+     <h2>${s.n}</h2>
+     <p class="sig">${esc(s.sig)}</p>
+     <div class="chips">${s.chars.map(c=>`<span class="chip">${esc(c)}</span>`).join('')}</div>
+   </div>
+   <p class="note why"><b>How and why it works:</b> ${esc(s.why)}</p>
+   <div class="grid">${s.subs.map(u=>`
+     <article class="sub-card" style="${u.head?'background:var(--surface-2)':''}">
+       <div class="row" style="justify-content:space-between"><h4>${esc(u.n)}</h4>${u.head?'<span class="tag">defines subgroup</span>':''}</div>
+       <ul class="dots traits">${u.traits.map(t=>`<li>${italicize(t)}</li>`).join('')}</ul>
+       ${u.ex?`<p style="font-size:.92rem"><b>Example:</b> ${italicize(u.ex)} ${u.exExtra?'<span class="tag extra">beyond slides</span>':''}</p>`:''}
+       ${u.dec?`<p class="decode">Name: ${esc(u.dec)}</p>`:''}
+     </article>`).join('')}</div>
+   ${id==='amo'?`<p class="note warn"><b>Slide typos to know:</b> the first Amoebozoa slide is headed "1. Archaeplastida" but describes Amoebozoa. "Diplodontic life cycle" most likely means <b>diplontic</b> (the diploid stage dominates; the plasmodium is 2n).</p>`:''}
+   ${id==='opi'?`<p class="note warn"><b>Careful:</b> the slide lists "multicellular" as a characteristic, but nucleariids and many choanoflagellates are unicellular. Read it as "includes the multicellular fungi and animals."</p>`:''}
+   ${id==='chr'?`<p class="note">Golden algae also appear under Stramenopiles on the tree (slide 7) but get no details in the lecture.</p>`:''}
+   <div class="row"><button class="btn" data-quizg="${id}">Quiz me on ${s.n}</button><button class="btn" data-cardg="${id}">Flashcards for ${s.n}</button></div>`;
+  applyRecall();
+}
+$('#sgBody').addEventListener('click',e=>{
+  const t=e.target.closest('.traits');if(t&&$('#recallToggle').checked)t.classList.toggle('shown');
+  const q=e.target.closest('[data-quizg]');if(q){quizTopics=new Set([q.dataset.quizg]);renderQuizFilter();showTab('quiz');window.scrollTo({top:0})}
+  const c=e.target.closest('[data-cardg]');if(c){$('#fcGroup').value=c.dataset.cardg;buildDeck();showTab('cards');window.scrollTo({top:0})}
+});
+function applyRecall(){$('#sgBody').classList.toggle('recall',$('#recallToggle').checked)}
+$('#recallToggle').addEventListener('change',()=>{applyRecall();store.set('recall',$('#recallToggle').checked)});
+$('#recallToggle').checked=!!store.get('recall',false);
+
+/* ================= COMPARE ================= */
+let cmpF='all';
+function renderCmp(){
+  $('#cmpFilter').innerHTML=[['all','All','ink']].concat(SG.map(s=>[s.id,s.n,s.id])).map(([id,n,c])=>`<button data-f="${id}" aria-pressed="${cmpF===id}"><span class="sw" style="background:var(--${c})"></span>${n}</button>`).join('');
+  const rows=CMP.filter(r=>cmpF==='all'||r[0]===cmpF);
+  $('#cmpTable').innerHTML=`<thead><tr><th>Supergroup</th><th>Group</th><th>Moves by</th><th>Wall / covering</th><th>Nutrition</th><th>Signature trait</th><th>Example</th></tr></thead><tbody>${rows.map(r=>`<tr><td><span class="row" style="gap:6px;flex-wrap:nowrap"><span class="sw" style="background:${col(r[0])}"></span>${SGMAP[r[0]].n}</span></td><td class="grp">${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td>${esc(r[4])}</td><td><b>${esc(r[5])}</b></td><td>${italicize(r[6])}</td></tr>`).join('')}</tbody>`;
+}
+$('#cmpFilter').addEventListener('click',e=>{const b=e.target.closest('[data-f]');if(b){cmpF=b.dataset.f;renderCmp()}});
+renderCmp();
+$('#pairs').innerHTML=PAIRS.map(p=>`<div class="pair"><div class="ttl">${p.t}</div><div class="stack" style="gap:4px"><span class="nm">${p.a[0]}</span><span>${p.a[1]}</span></div><div class="stack" style="gap:4px"><span class="nm">${p.b[0]}</span><span>${p.b[1]}</span></div></div>`).join('');
+
+/* key */
+let keyPath=['start'];
+function renderKey(){
+  const node=keyPath[keyPath.length-1];
+  let html=`<div class="trail">${keyPath.length>1?`<button class="btn" id="kBack">← Back</button><button class="btn" id="kReset">Start over</button>`:'<span class="muted">Step 1</span>'}</div>`;
+  if(node.startsWith('R:')){
+    const [,name,g]=node.split(':');const s=SGMAP[g];
+    html+=`<div class="result" style="--c:${col(g)}"><span class="eyebrow">Identified</span><h3 style="margin-top:4px">${esc(name)}</h3><p>Supergroup: <b>${s.n}</b>. ${esc(s.sig)}</p><div class="row" style="margin-top:10px"><button class="btn" data-open="${g}">Read about ${s.n}</button></div></div>`;
+  } else {
+    const n=KEY[node];
+    html+=`<p class="qtext">${esc(n.q)}</p><div class="opts">${n.o.map(([t,to])=>`<button data-to="${to}">${esc(t)}</button>`).join('')}</div>`;
+  }
+  $('#key').innerHTML=html;
+}
+$('#key').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.to){keyPath.push(b.dataset.to)}
+  else if(b.id==='kBack'){keyPath.pop()}
+  else if(b.id==='kReset'){keyPath=['start']}
+  else if(b.dataset.open){openGroup(b.dataset.open);showTab('groups');window.scrollTo({top:0});return}
+  renderKey();
+});
+renderKey();
+
+/* ================= MEMORIZE ================= */
+const MN=[['E','very','exc'],['C','hef','chr'],['R','oasts','rhi'],['A','sparagus','arc'],['A','nd','amo'],['O','nions','opi']];
+$('#mnemo').innerHTML=MN.map(([l,r,g])=>`<b style="--c:${col(g)}">${l}</b>${r}`).join(' ');
+$('#oneThing').innerHTML=SG.map(s=>`<div class="card stack" style="gap:6px;border-top:4px solid ${col(s.id)}"><span class="eyebrow">${s.roman}. ${s.n}</span><p class="sig" style="font-size:1.15rem">${esc(s.one)}</p><p class="muted" style="font-size:.9rem">${esc(s.sig)}</p></div>`).join('');
+$('#decoder').innerHTML=`<thead><tr><th>Name</th><th>Root</th><th>Points to</th></tr></thead><tbody>${DECODE.map(r=>`<tr><td class="grp">${esc(r[0])}</td><td class="mono">${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join('')}</tbody>`;
+
+let sortQ=shuffle(SORT),sortI=0,sortOK=0;
+function renderSorter(msg){
+  if(sortI>=sortQ.length){$('#sorter').innerHTML=`<p class="qtext">${sortOK} / ${sortQ.length} correct.</p><div><button class="btn primary" id="sortAgain">Sort again</button></div>`;return}
+  const [name]=sortQ[sortI];
+  $('#sorter').innerHTML=`<span class="mono tabnum">${sortI+1} / ${sortQ.length}</span><p class="item">${esc(name)}</p><div class="opts">${['silica','CaCO₃','cellulose','chitin'].map(m=>`<button class="btn" data-m="${m}">${m}</button>`).join('')}</div>${msg||''}`;
+}
+$('#sorter').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.id==='sortAgain'){sortQ=shuffle(SORT);sortI=0;sortOK=0;renderSorter();return}
+  if(b.id==='sortNext'){sortI++;renderSorter();return}
+  if(!b.dataset.m)return;
+  const ans=sortQ[sortI][1],ok=b.dataset.m===ans;if(ok)sortOK++;
+  $$('#sorter [data-m]').forEach(x=>{x.disabled=true;if(x.dataset.m===ans)x.style.borderColor='var(--good)';else if(x===b)x.style.borderColor='var(--bad)'});
+  $('#sorter').insertAdjacentHTML('beforeend',`<div class="fb ${ok?'ok':'no'}"><b class="v">${ok?'Correct.':'Not quite.'}</b><span>${esc(sortQ[sortI][0])}: ${ans}.</span></div><div><button class="btn primary" id="sortNext">Next</button></div>`);
+});
+renderSorter();
+
+/* ================= FLASHCARDS ================= */
+$('#fcGroup').innerHTML=`<option value="all">All</option><option value="intro">Intro</option>`+SG.map(s=>`<option value="${s.id}">${s.n}</option>`).join('');
+let deck=[],fcI=0,fcDone=0;
+function buildDeck(){
+  const dir=$('#fcDir').value,g=$('#fcGroup').value;
+  let cards=[];
+  if(dir==='vocab'){cards=VOCAB.filter(v=>g==='all'||v[2]===g).map(v=>({f:v[0],b:v[1],g:v[2],fl:'Term',bl:'Meaning'}))}
+  else{
+    SG.forEach(s=>{if(g!=='all'&&g!==s.id)return;s.subs.forEach(u=>{
+      const traits=u.traits.map(t=>'• '+t).join('<br>');
+      cards.push(dir==='t2g'?{f:traits,b:u.n+`<div class="muted" style="font-size:.95rem;margin-top:6px;font-family:var(--f-body)">${s.n}</div>`,g:s.id,fl:'Which group has these traits?',bl:'Answer',html:true}:{f:u.n,b:traits,g:s.id,fl:'List the distinguishing traits',bl:s.n,html:true,backSmall:true});
+    })});
+  }
+  deck=shuffle(cards).map(c=>({...c,ok:false}));fcI=0;fcDone=0;renderCard();
+}
+function renderCard(){
+  const fc=$('#fc');fc.classList.remove('flipped');
+  if(!deck.length){$('.front',fc).innerHTML='<p>No cards for this filter.</p>';$('.back',fc).innerHTML='';return}
+  if(fcDone>=deck.length){$('.front',fc).innerHTML=`<p class="a">Deck complete.</p><p class="muted">All ${deck.length} cards marked "Got it". Shuffle to go again or switch direction.</p>`;$('.back',fc).innerHTML='';$('#fcPos').textContent='';$('#fcStat').textContent=`${deck.length} / ${deck.length}`;$('#fcBar').style.width='100%';fc.style.setProperty('--c','var(--good)');return}
+  while(deck[fcI].ok)fcI=(fcI+1)%deck.length;
+  const c=deck[fcI];fc.style.setProperty('--c',col(c.g));
+  const fe=c.html?(c.f):esc(c.f),be=c.html?(c.b):esc(c.b);
+  $('.front',fc).innerHTML=`<span class="eyebrow">${esc(c.fl)}</span><div class="${c.html&&c.f.includes('•')?'q':'a'}">${fe}</div><span class="muted" style="font-size:.85rem">Tap to flip</span>`;
+  $('.back',fc).innerHTML=`<span class="eyebrow">${esc(c.bl)}</span><div class="${c.backSmall||!c.html&&c.b.length>40?'q':'a'}">${be}</div>`;
+  $('#fcPos').textContent=`Card ${fcI+1} of ${deck.length}`;
+  $('#fcStat').textContent=`${fcDone} learned`;
+  $('#fcBar').style.width=(fcDone/deck.length*100)+'%';
+}
+function flip(){$('#fc').classList.toggle('flipped')}
+$('#fc').addEventListener('click',flip);
+$('#fc').addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();flip()}});
+$('#fcGot').addEventListener('click',()=>{if(fcDone>=deck.length)return;deck[fcI].ok=true;fcDone++;if(fcDone<deck.length)fcI=(fcI+1)%deck.length;renderCard()});
+$('#fcAgain').addEventListener('click',()=>{if(fcDone>=deck.length)return;const c=deck.splice(fcI,1)[0];const pos=Math.min(deck.length,fcI+3);deck.splice(pos,0,c);if(fcI>=deck.length)fcI=0;renderCard()});
+$('#fcPrev').addEventListener('click',()=>{if(!deck.length)return;let n=deck.length;do{fcI=(fcI-1+deck.length)%deck.length}while(deck[fcI].ok&&--n>0);renderCard()});
+$('#fcShuffle').addEventListener('click',buildDeck);
+$('#fcDir').addEventListener('change',buildDeck);$('#fcGroup').addEventListener('change',buildDeck);
+document.addEventListener('keydown',e=>{if($('#cards').hidden||e.target.matches('input,select,textarea'))return;if(e.key==='ArrowRight')$('#fcGot').click();if(e.key==='ArrowLeft')$('#fcAgain').click()});
+buildDeck();
+
+/* ================= QUIZ ================= */
+let quizMode='mc',quizTopics=new Set(['all']);
+const TOPICS=[['all','All'],['intro','Intro & endosymbiosis']].concat(SG.map(s=>[s.id,s.n]));
+function renderQuizFilter(){
+  $('#quizFilter').innerHTML=TOPICS.map(([id,n])=>`<button data-t="${id}" aria-pressed="${quizTopics.has(id)}">${id!=='all'&&id!=='intro'?`<span class="sw" style="background:${col(id)}"></span>`:''}${n}</button>`).join('');
+  $('#quizAvail').textContent=pool().reduce((a,q)=>a+weight(q),0)+' items available';
+}
+$('#quizFilter').addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(!b)return;const t=b.dataset.t;
+  if(t==='all')quizTopics=new Set(['all']);else{quizTopics.delete('all');quizTopics.has(t)?quizTopics.delete(t):quizTopics.add(t);if(!quizTopics.size)quizTopics.add('all')}
+  renderQuizFilter()});
+$('#modes').addEventListener('click',e=>{const b=e.target.closest('[data-mode]');if(!b)return;quizMode=b.dataset.mode;$$('#modes button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderQuizFilter()});
+function inTopic(g){return quizTopics.has('all')||quizTopics.has(g)||(g==='mix')}
+function pool(){
+  const mc=MC.filter(q=>inTopic(q.g)).map(q=>({t:'mc',...q})),id=ID.filter(q=>inTopic(q.g)).map(q=>({t:'id',...q})),ps=PS.filter(q=>inTopic(q.g)).map(q=>({t:'ps',...q}));
+  return quizMode==='mc'?mc:quizMode==='id'?id:quizMode==='ps'?ps:[...mc,...id,...ps];
+}
+$('#qcount').textContent=MC.length+ID.length+PS.reduce((a,c)=>a+c.steps.length,0);
+
+const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');
+function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let p=Array.from({length:n+1},(_,i)=>i);for(let i=1;i<=m;i++){let c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]}
+function checkId(input,answers){
+  const x=norm(input);if(!x)return {ok:false};
+  for(const a of answers){const y=norm(a);if(x===y)return {ok:true,exact:true};
+    if(/^\d+$/.test(y))continue;
+    const tol=y.length>=10?2:y.length>=5?1:0;if(tol&&lev(x,y)<=tol)return {ok:true,exact:false,a}}
+  return {ok:false};
+}
+
+let Q={items:[],i:0,step:0,score:0,total:0,missed:[]};
+$('#quizStart').addEventListener('click',()=>startQuiz(pool()));
+const weight=q=>q.t==='ps'?q.steps.length:1;
+function startQuiz(items,all){
+  const n=+$('#quizLen').value;items=shuffle(items);
+  if(!all){const pick=[];let c=0;for(const q of items){if(c>=n)break;pick.push(q);c+=weight(q)}items=pick}
+  if(!items.length)return;
+  Q={items,i:0,step:0,score:0,total:items.reduce((a,q)=>a+(q.t==='ps'?q.steps.length:1),0),missed:[],answered:0};
+  $('#quizSetup').hidden=true;$('#quizRun').hidden=false;renderQ();
+}
+function curUnit(){const q=Q.items[Q.i];return q.t==='ps'?{...q.steps[Q.step],parent:q}:q}
+function renderQ(){
+  const q=Q.items[Q.i],u=curUnit(),isPS=q.t==='ps';
+  const isID=isPS?!!u.id:q.t==='id';
+  const g=q.g;
+  let h=`<div class="qbox" style="--c:${col(g==='mix'?'intro':g)}">
+   <div class="row" style="justify-content:space-between"><span class="mono tabnum">Q ${Q.i+1} / ${Q.items.length}${isPS?` · step ${Q.step+1} of ${q.steps.length}`:''}</span><span class="row" style="gap:8px"><span class="tag">${isPS?'problem solving':isID?'identification':'multiple choice'}</span><span class="tag">${esc(groupName(g))}</span><span class="mono tabnum">${Q.score} pts</span></span></div>
+   <div class="progress"><i style="width:${Q.answered/Q.total*100}%"></i></div>`;
+  if(isPS){h+=`<h3>${esc(q.title)}</h3><div class="case">${italicize(q.text)}</div>`}
+  h+=`<p class="qtext">${italicize(u.q)}</p>`;
+  if(isID){h+=`<form class="idrow" id="idForm"><input id="idIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer"><button class="btn primary">Check</button><button type="button" class="btn" id="idSkip">Show answer</button></form>`}
+  else{const order=shuffle(u.o.map((t,i)=>i));h+=`<div class="opts-q">${order.map((i,k)=>`<button data-i="${i}"><span class="k">${'ABCD'[k]||k+1}</span><span>${italicize(u.o[i])}</span></button>`).join('')}</div>`}
+  h+=`<div id="fbSlot"></div><div class="row" style="justify-content:space-between"><button class="btn" id="qQuit">End quiz</button><span></span></div></div>`;
+  $('#quizRun').innerHTML=h;
+  if(isID){$('#idIn').focus({preventScroll:true});$('#idForm').addEventListener('submit',ev=>{ev.preventDefault();gradeId(false)});$('#idSkip').addEventListener('click',()=>gradeId(true))}
+  else{$$('.opts-q button').forEach(b=>b.addEventListener('click',()=>gradeMC(+b.dataset.i)))}
+  $('#qQuit').addEventListener('click',endQuiz);
+}
+function record(ok,u,yours){Q.answered++;if(ok)Q.score++;else Q.missed.push({item:Q.items[Q.i],q:u.q,ans:u.id?u.id[0]:u.a!=null&&u.o?u.o[u.a]:(u.a||[])[0],yours,e:u.e,parent:u.parent})}
+function gradeMC(i){
+  const u=curUnit(),ok=i===u.a;
+  $$('.opts-q button').forEach(b=>{b.disabled=true;const k=+b.dataset.i;if(k===u.a)b.classList.add('right');else if(k===i)b.classList.add('wrong')});
+  record(ok,u,u.o[i]);feedback(ok,u,u.o[u.a]);
+}
+function gradeId(skip){
+  const q=Q.items[Q.i],u=curUnit(),answers=u.id||q.a;
+  const val=$('#idIn').value;if(!skip&&!val.trim()){$('#idIn').focus();return}
+  const r=skip?{ok:false}:checkId(val,answers);
+  $('#idIn').disabled=true;$$('#idForm button').forEach(b=>b.disabled=true);
+  record(r.ok,{...u,id:answers},skip?'(skipped)':val);
+  feedback(r.ok,{...u,e:u.e||''},answers[0],r.ok&&!r.exact?`Accepted. Exact spelling: <b>${italicize(answers[0])}</b>.`:'');
+}
+function feedback(ok,u,correct,extra){
+  const last=Q.i===Q.items.length-1&&(Q.items[Q.i].t!=='ps'||Q.step===Q.items[Q.i].steps.length-1);
+  $('#fbSlot').innerHTML=`<div class="fb ${ok?'ok':'no'}"><b class="v">${ok?'Correct.':'Not quite.'} ${ok?'':'Answer: '+italicize(correct)}</b>${extra?`<span>${extra}</span>`:''}${u.e?`<span>${italicize(u.e)}</span>`:''}</div><div class="row" style="margin-top:10px"><button class="btn primary" id="qNext">${last?'See results':'Next'}</button></div>`;
+  $('#qNext').focus({preventScroll:true});
+  $('#qNext').addEventListener('click',next);
+}
+function next(){
+  const q=Q.items[Q.i];
+  if(q.t==='ps'&&Q.step<q.steps.length-1){Q.step++}else{Q.i++;Q.step=0}
+  if(Q.i>=Q.items.length)endQuiz();else renderQ();
+}
+function endQuiz(){
+  const pct=Q.answered?Math.round(Q.score/Q.answered*100):0;
+  const key='best:'+quizMode;const best=store.get(key,0);if(Q.answered>=5&&pct>best)store.set(key,pct);
+  const retry=[...new Map(Q.missed.map(m=>[m.item,m.item])).values()];
+  $('#quizRun').innerHTML=`<div class="stack">
+    <span class="eyebrow">Result</span>
+    <div class="row" style="gap:16px;align-items:baseline"><span class="score tabnum">${Q.score} / ${Q.answered}</span><span class="muted">${pct}% · ${pct>=90?'Exam-ready on these items.':pct>=75?'Solid. Review the misses below.':'Go back to the Supergroups tab with Recall mode, then retry the misses.'}</span></div>
+    <div class="row">${retry.length?`<button class="btn primary" id="qRetry">Retry ${retry.length} missed</button>`:''}<button class="btn" id="qNew">New quiz</button></div>
+    ${Q.missed.length?`<h3>Review</h3><div class="missed">${Q.missed.map(m=>`<div class="card stack" style="gap:4px"><span>${m.parent?`<span class="tag">${esc(m.parent.title)}</span> `:''}${italicize(m.q)}</span><span>Your answer: <span style="color:var(--bad)">${italicize(m.yours||'')}</span></span><span>Correct: <b style="color:var(--good)">${italicize(m.ans)}</b></span>${m.e?`<span class="muted">${italicize(m.e)}</span>`:''}</div>`).join('')}</div>`:'<p>No misses.</p>'}
+  </div>`;
+  $('#qNew').addEventListener('click',()=>{$('#quizRun').hidden=true;$('#quizSetup').hidden=false;renderBest()});
+  if(retry.length)$('#qRetry').addEventListener('click',()=>startQuiz(retry,true));
+}
+function renderBest(){const parts=[['mc','Multiple choice'],['id','Identification'],['ps','Problem solving'],['mix','Mixed']].map(([k,n])=>{const v=store.get('best:'+k,0);return v?`${n} ${v}%`:null}).filter(Boolean);$('#bestLine').textContent=parts.length?'Best scores on this device: '+parts.join(' · '):''}
+renderQuizFilter();renderBest();
+
+/* ================= INIT ================= */
+openGroup(SGMAP[curSG]?curSG:'exc');
+const h=(location.hash||'').slice(1);
+showTab(TABS.includes(h)?h:store.get('tab','lesson'));
+</script>
